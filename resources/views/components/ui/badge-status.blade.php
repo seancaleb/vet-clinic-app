@@ -1,0 +1,23 @@
+@props(['status'])
+
+@php
+    switch ($status) {
+        case 'pending':
+            $class = 'text-xs font-semibold rounded-lg px-2 py-1 bg-yellow-500/10 text-yellow-500 inline-block';
+            break;
+        case 'confirmed':
+        case 'verified':
+            $class = 'text-xs font-semibold rounded-lg px-2 py-1 bg-green-500/10 text-green-500 inline-block';
+            break;
+        case 'cancelled':
+        case 'not-verified':
+            $class = 'text-xs font-semibold rounded-lg px-2 py-1 bg-red-500/10 text-red-500 inline-block';
+            break;
+        default:
+            $class = 'text-xs font-semibold rounded-lg px-2 py-1 bg-gray-500/10 text-gray-500 inline-block';
+            break;
+    }
+@endphp
+
+<div {!! $attributes->merge(['class' => $class]) !!}>
+    {{ $slot }}</div>

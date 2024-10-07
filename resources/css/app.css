@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    table {
+        @apply text-sm w-full;
+    }
+
+    th {
+        @apply text-left px-6 py-4 bg-gray-50 text-gray-800;
+    }
+
+    td {
+        @apply p-6 text-left text-gray-500 max-w-[228px] min-w-[128px];
+    }
+
+    tr {
+        @apply cursor-pointer hover:bg-gray-50 transition duration-300;
+    }
+}
+
+@layer components {
+    .section {
+        @apply p-4 sm:p-8 bg-white shadow sm:rounded-lg;
+    }
+}
