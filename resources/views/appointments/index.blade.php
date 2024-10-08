@@ -1,36 +1,27 @@
-@php
-    use Carbon\Carbon;
-
-    function format_date($date)
-    {
-        return Carbon::parse($date)->format('m/d/Y');
-    }
-@endphp
-
 <x-app-layout>
-    <x-slot:header>
-        @if ($user->role === 'admin')
-            {{ __('All Appointments') }}
-        @else
-            {{ __('My Appointments') }}
-        @endif
-    </x-slot:header>
-
-    <x-slot:actions>
-        <div class="flex items-center gap-2">
-            <x-ui.link href="{{ route('appointments.create') }}" class="flex items-center gap-2"><svg
-                    xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M12 21q-.425 0-.712-.288T11 20v-7H4q-.425 0-.712-.288T3 12t.288-.712T4 11h7V4q0-.425.288-.712T12 3t.713.288T13 4v7h7q.425 0 .713.288T21 12t-.288.713T20 13h-7v7q0 .425-.288.713T12 21" />
-                </svg>
-                New Appointment</x-ui.link>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             @if ($user->role === 'admin')
-                <x-ui.alternative-button id="dialog-button" class="flex items-center gap-2"><svg
-                        xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M11 18q-.425 0-.712-.288T10 17t.288-.712T11 16h2q.425 0 .713.288T14 17t-.288.713T13 18zm-4-5q-.425 0-.712-.288T6 12t.288-.712T7 11h10q.425 0 .713.288T18 12t-.288.713T17 13zM4 8q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z" />
-                    </svg>
-                    Filter By</x-ui.alternative-button>
+                {{ __('All Appointments') }}
+            @else
+                {{ __('My Appointments') }}
+            @endif
+        </h2>
+    </x-slot>
+
+    <section class="space-y-6">
+        <div class="grid gap-6 justify-items-start">
+            @if ($user->role !== 'admin')
+                <x-link href="{{ route('appointments.create') }}">Create new booking</x-link>
+            @else
+                @isset($queryParams)
+                    @foreach ($queryParams as $param)
+                        <div>{{ $param }}</div>
+                    @endforeach
+                @endisset
+
+                <x-ui.primary-button id="dialog-button">Trigger</x-ui.primary-button>
+
                 <x-ui.dialog :overlayId="__('filter-dialog-overlay')" :contentId="__('filter-dialog-content')" :closeBtnId="__('filter-dialog-close-button')">
                     <x-slot:header>
                         <h4 class='font-semibold text-lg text-gray-900'>Filter options</h4>
@@ -51,8 +42,7 @@
                                 {{-- Filter by date range  --}}
                                 <div>
                                     <x-ui.input-label :value="__('Filter by date range')" />
-                                    <x-ui.input-date-range-picker :wrapperId="__('datepicker-filter')" :datepickerStartId="__('datepicker-filter-start')"
-                                        :datepickerEndId="__('datepicker-filter-end')" />
+                                    <x-ui.input-date-picker :wrapperId="__('datepicker-filter')" :datepickerStartId="__('datepicker-filter-start')" :datepickerEndId="__('datepicker-filter-end')" />
                                 </div>
 
                                 {{-- Filter by status  --}}
@@ -81,21 +71,17 @@
                 </x-ui.dialog>
             @endif
 
-        </div>
-    </x-slot:actions>
 
-    <section class="space-y-6">
-        <div class="grid gap-6 justify-items-start">
             @if ($appointments->count() > 0)
-                <table>
+                <table class="bg-white rounded-xl overflow-clip">
                     <tr>
                         <th class='whitespace-nowrap'>Pet name</th>
                         @if (Auth::user()->role === 'admin')
-                            <th class='whitespace-nowrap'>Pet owner</th>
+                            <th class='whitespace-nowrap'>Pet Owner</th>
                         @endif
                         <th>Description</th>
                         <th>Type</th>
-                        <th>Schedule</th>
+                        <th>Date</th>
                         <th>Status</th>
                     </tr>
                     @foreach ($appointments as $appointment)
@@ -112,7 +98,7 @@
                                 {{ ucfirst($appointment->appointment_type) }}
                             </td>
                             <td class='whitespace-nowrap'>
-                                {{ format_date($appointment->appointment_date) }}</td>
+                                {{ $appointment->appointment_date }}</td>
                             <td class='whitespace-nowrap'>
                                 <x-ui.badge-status
                                     :status="$appointment->status">{{ strtoupper($appointment->status) }}</x-ui.badge-status>
@@ -121,14 +107,10 @@
                     @endforeach
                 </table>
             @else
-                <section class="py-32 w-full text-gray-500">
-                    <div class="grid gap-2 text-center w-full justify-items-center">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
-                            No active appointments found.
-                        </h2>
-                        <p class="max-w-[50ch]">No appointments scheduled yet.</p>
-                    </div>
-                </section>
+                <div class='px-6 py-8 rounded-lg bg-indigo-50/50 text-center'>
+                    <p>There are no active appointment/s listed at the moment.</p>
+                </div>
+
             @endif
         </div>
 

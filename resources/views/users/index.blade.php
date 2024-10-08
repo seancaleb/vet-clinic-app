@@ -1,22 +1,5 @@
 @php
     use Carbon\Carbon;
-
-    function format_date($date)
-    {
-        return Carbon::parse($date)->format('m/d/Y');
-    }
-
-    function get_total_appointments($count)
-    {
-        if ($count === 0) {
-            return 'N/A';
-        } elseif ($count === 1) {
-            return "{$count} appointment";
-        } else {
-            return "{$count} appointments";
-        }
-    }
-
 @endphp
 
 <x-app-layout>
@@ -24,8 +7,8 @@
 
     <section class="space-y-6">
         <div class="space-y-6">
-            @if ($users->count() > 1)
-                <table>
+            @if ($users->count() > 0)
+                <table class="bg-white rounded-xl overflow-clip">
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
@@ -40,11 +23,11 @@
                         @endif
 
                         <tr onclick="window.location='{{ route('users.show', ['user' => $user]) }}'">
-                            <td class='text-gray-800 font-medium'>{{ $user->name }}</td>
+                            <td class='whitespace-nowrap text-gray-800 font-medium'>{{ $user->name }}</td>
                             <td class='whitespace-nowrap'>{{ $user->email }}</td>
                             <td class='whitespace-nowrap'>{{ ucfirst($user->role) }}</td>
-                            <td class='whitespace-nowrap'>{{ get_total_appointments($user->appointments->count()) }}</td>
-                            <td class='whitespace-nowrap'>{{ format_date($user->created_at) }}
+                            <td class='whitespace-nowrap'>{{ $user->appointments->count() }}</td>
+                            <td class='whitespace-nowrap'>{{ Carbon::parse($user->created_at)->format('Y-m-d') }}
                             </td>
                             <td>
                                 @if (empty($user->email_verified_at))
@@ -59,14 +42,9 @@
                     @endforeach
                 </table>
             @else
-                <section class="py-32 w-full text-gray-500">
-                    <div class="grid gap-2 text-center w-full justify-items-center">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
-                            No active users at the moment.
-                        </h2>
-                        <p class="max-w-[50ch]">There are currently no active patients yet.</p>
-                    </div>
-                </section>
+                <div class='px-6 py-8 rounded-lg bg-indigo-50/50 text-center'>
+                    <p>There are no active user/s listed at the moment.</p>
+                </div>
 
             @endif
         </div>
