@@ -4,24 +4,29 @@
 
 @layer base {
     table {
-        @apply text-sm w-full;
+        @apply text-sm w-full bg-white rounded-xl overflow-clip;
     }
 
     th {
-        @apply text-left px-6 py-4 bg-gray-50 text-gray-800;
+        @apply text-left px-6 py-3 bg-gray-50 text-gray-800 font-medium;
     }
 
     td {
-        @apply p-6 text-left text-gray-500 max-w-[228px] min-w-[128px];
+        @apply px-6 py-7 text-left text-gray-500 max-w-[228px] min-w-[128px];
     }
 
     tr {
-        @apply cursor-pointer hover:bg-gray-50 transition duration-300;
+        @apply cursor-pointer hover:bg-gray-50 transition duration-300 border-b border-gray-100;
+    }
+
+    tr:first-of-type,
+    tr:last-of-type {
+        @apply border-none;
     }
 }
 
 @layer components {
     .section {
-        @apply p-4 sm:p-8 bg-white shadow sm:rounded-lg;
+        @apply p-4 sm:p-8 bg-white shadow sm:rounded-xl;
     }
 }
