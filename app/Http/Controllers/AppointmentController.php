@@ -81,10 +81,12 @@ class AppointmentController extends Controller {
             'appointment_type' => ['required']
         ]);
 
+        $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
+
         $appointment = Appointment::create([
             'description' => request('description'),
             'pet_name' => request('pet_name'),
-            'appointment_date' => request('appointment_date'),
+            'appointment_date' => $appointment_date,
             'appointment_type' => request('appointment_type'),
             'user_id' => $user->id,
             'status' => 'pending'
@@ -127,11 +129,12 @@ class AppointmentController extends Controller {
             ]);
 
             $current_status = $appointment->status;
+            $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
 
             $appointment->update([
                 'description' => request('description'),
                 'pet_name' => request('pet_name'),
-                'appointment_date' => request('appointment_date'),
+                'appointment_date' => $appointment_date,
                 'appointment_type' => request('appointment_type'),
                 'user_id' => $user->role === 'admin' ? $appointment->user_id : $user->id,
                 'status' => request('status') ?? $appointment->status,
@@ -166,7 +169,7 @@ class AppointmentController extends Controller {
         $user = Auth::user();
 
 
-        if ($user->id != $appointment->user_id) {
+        if ($user->id != $appointment->user_id && $user->role !== 'admin') {
             abort(403, "You don't have permission to edit this resource.");
         }
 
