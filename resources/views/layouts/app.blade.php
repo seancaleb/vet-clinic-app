@@ -27,13 +27,15 @@
         <div class="grid content-start fixed top-0 left-[256px] right-0 bottom-0 z-10">
             <header>
                 <div class="p-6 bg-white h-14 flex items-center justify-end border-b border-gray-300">
-                    <span class="text-gray-500 text-[0.9375rem] leading-none">Hi,
-                        {{ Auth::user()->name }}</span>
+                    <span class="text-gray-800 text-[0.9375rem] tracking-[-0.02em] leading-none">
+                        {{ Auth::user()->name }} 👋🏻</span>
                 </div>
-                <div class="p-6 bg-white h-14 flex items-center border-b border-gray-300">
-                    <h2 class="font-semibold text-xl text-gray-800 leading-none">
+                <div class="p-6 bg-white h-14 flex items-center justify-between gap-6 border-b border-gray-300">
+                    <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
                         {{ $header }}
                     </h2>
+
+                    {{ $actions ?? null }}
                 </div>
             </header>
 
