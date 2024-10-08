@@ -13,37 +13,16 @@ class DatabaseSeeder extends Seeder {
      */
     public function run(): void {
         User::factory()->create([
-            'name' => 'Sean Caleb Ubias',
-            'email' => 'scmubias@gmail.com',
-            'password' => bcrypt('immortalsean'),
+            'name' => 'John Doe',
+            'email' => 'anyma.seancaleb@gmail.com',
+            'password' => bcrypt('pass123.'),
             'role' => 'admin',
         ]);
 
         User::factory()->create([
-            'name' => 'Larrie Boy Montojo',
-            'email' => 'anyma.seancaleb@gmail.com',
-            'password' => bcrypt('immortalsean'),
-            'role' => 'patient',
-        ]);
-
-        User::factory()->create([
-            'name' => 'Alexander John Magtulis',
-            'email' => 'xanderjohn@gmail.com',
-            'password' => bcrypt('immortalsean'),
-            'role' => 'patient',
-        ]);
-
-        User::factory()->create([
-            'name' => 'Justin Edralin',
-            'email' => 'justinedralin@gmail.com',
-            'password' => bcrypt('immortalsean'),
-            'role' => 'patient',
-        ]);
-
-        User::factory()->create([
-            'name' => 'Ashley Magracia',
-            'email' => 'ashleymagracia@gmail.com',
-            'password' => bcrypt('immortalsean'),
+            'name' => 'Jane Doe',
+            'email' => 'anyma.sean@gmail.com',
+            'password' => bcrypt('pass123.'),
             'role' => 'patient',
         ]);
 

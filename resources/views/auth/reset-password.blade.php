@@ -1,4 +1,7 @@
 <x-guest-layout>
+    <x-slot:header>Reset Password</x-slot:header>
+    <x-slot:header_text>Reset and add your new password.</x-slot:header_text>
+
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
@@ -7,33 +10,30 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
+            <x-ui.input-label for="email" :value="__('Email')" />
+
+            <x-ui.input-text id="email" name="email" type="email" required value="{{ request()->email }}" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <x-ui.input-label for="password" :value="__('Password')" />
+            <x-ui.input-text id="password" name="password" type="password" required />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
+            <x-ui.input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-ui.input-text id="password_confirmation" name="password_confirmation" type="password" required />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
+        <div class="flex items-center justify-end mt-6">
+            <x-ui.primary-button class="ms-3">
+                Reset Password
+            </x-ui.primary-button>
         </div>
     </form>
 </x-guest-layout>
