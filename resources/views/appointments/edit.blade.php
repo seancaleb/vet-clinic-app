@@ -1,17 +1,26 @@
+@php
+    use Carbon\Carbon;
+
+    $min_date = Carbon::now()->format('m/d/Y');
+
+    $appointment_type_options = ['check-up', 'vaccination', 'surgery'];
+    $status_options = ['pending', 'confirmed', 'cancelled'];
+@endphp
+
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Appointment') }}
-        </h2>
-    </x-slot>
+    <x-slot:header>
+        Manage appointment
+    </x-slot:header>
 
-    <section class='section max-w-xl mx-auto'>
-        <div class='grid gap-1'>
-            <div class='text-gray-900 text-lg font-medium'>Edit Appointment #{{ $appointment->id }}</div>
-            <p class='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur harum
-                sequi aliquid officiis.</p>
-        </div>
-
+    <section class='section mx-auto max-w-xl'>
+        <header>
+            <h2 class="text-lg font-medium text-gray-800">
+                Manage appointment #{{ $appointment->id }}
+            </h2>
+            <p class="mt-1 text-sm text-gray-500">
+                Modify appointment details.
+            </p>
+        </header>
 
         <form method="POST" action="{{ route('appointments.update', ['appointment' => $appointment]) }}"
             class="mt-6 space-y-6">
@@ -20,65 +29,48 @@
 
             <div>
                 <x-input-label for="description" :value="__('Description')" />
-                <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" required
-                    value="{{ $appointment->description }}" />
+                <x-ui.input-text id="description" name="description" type="text" value="{{ $appointment->description }}"
+                    required />
                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
             </div>
 
             <div>
                 <x-input-label for="pet_name" :value="__('Pet name')" />
-                <x-text-input id="pet_name" name="pet_name" type="text" class="mt-1 block w-full" required
-                    value="{{ $appointment->pet_name }}" />
+                <x-ui.input-text id="pet_name" name="pet_name" type="text" value="{{ $appointment->pet_name }}"
+                    required />
                 <x-input-error class="mt-2" :messages="$errors->get('pet_name')" />
             </div>
 
             <div>
                 <x-input-label for="appointment_type" class="block mb-2 text-sm font-medium">Appointment
                     type</x-input-label>
-                <select id="appointment_type" name="appointment_type" required value=""
-                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
-                    <option disabled>Select an appointment type</option>
-                    <option value="check-up" @selected($appointment->appointment_type === 'check-up')>Check-up</option>
-                    <option value="vaccination" @selected($appointment->appointment_type === 'vaccination')>Vaccination</option>
-                    <option value="surgery" @selected($appointment->appointment_type === 'surgery')>Surgery</option>
-                </select>
+                <x-ui.input-select :id="'appoinment_type'" :name="'appointment_type'" :defaultSelectedTitle="'Select an appointment'" :options="$appointment_type_options"
+                    :selected="$appointment->appointment_type" />
+                <x-input-error class="mt-2" :messages="$errors->get('appointment_type')" />
             </div>
 
             @if ($user->role === 'admin')
                 <div>
                     <x-input-label for="status" class="block mb-2 text-sm font-medium">Status</x-input-label>
-                    <select id="status" name="status" required value=""
-                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
-                        <option disabled>Select status</option>
-                        <option value="pending" @selected($appointment->status === 'pending')>Pending</option>
-                        <option value="confirmed" @selected($appointment->status === 'confirmed')>Confirmed</option>
-                        <option value="cancelled" @selected($appointment->status === 'cancelled')>Cancelled</option>
-                    </select>
+                    <x-ui.input-select :id="'status'" :name="'status'" :defaultSelectedTitle="'Select status'" :options="$status_options"
+                        :selected="$appointment->status" />
+                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
                 </div>
             @endif
 
-
             <div>
-                <x-input-label for="appointment_date" :value="__('Date of appointment')" />
-                <x-text-input id="appointment_date" name="appointment_date" type="date"
-                    value="{{ $appointment->appointment_date }}" class="mt-1 block w-full" required
-                    min="{{ date('Y-m-d') }}" />
+                <x-input-label for="appointment_date" :value="__('Date of appointment')" class="block mb-2 text-sm font-medium" />
+                <x-ui.input-date-picker :id="'appointment_date'" :name="'appointment_date'"
+                    value="{{ Carbon::parse($appointment->appointment_date)->format('m/d/Y') }}" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>
 
 
-
-            <div class="flex items-center gap-4 justify-between">
-                <x-primary-button form="delete-appointment-form"
-                    class='bg-transparent text-red-700 hover:bg-red-50 focus:bg-red-50 active:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500'>{{ __('Cancel Appointment') }}</x-primary-button>
-                <x-primary-button>{{ __('Update Appointment') }}</x-primary-button>
-            </div>
-        </form>
-
-        <form action="{{ route('appointments.destroy', ['appointment' => $appointment]) }}" method="POST"
-            class='hidden' id="delete-appointment-form">
-            @csrf
-            @method('DELETE')
+            <x-ui.primary-button class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 text-white" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h11.175q.4 0 .763.15t.637.425l2.85 2.85q.275.275.425.638t.15.762V19q0 .825-.587 1.413T19 21zM19 7.85L16.15 5H5v14h14zM12 18q1.25 0 2.125-.875T15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18m-5-8h7q.425 0 .713-.288T15 9V7q0-.425-.288-.712T14 6H7q-.425 0-.712.288T6 7v2q0 .425.288.713T7 10M5 7.85V19V5z" />
+                </svg>Update Appointment</x-ui.primary-button>
         </form>
     </section>
 </x-app-layout>
