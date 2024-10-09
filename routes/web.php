@@ -3,9 +3,16 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('/dashboard');
+    } else {
+        return view('landing-page');
+    }
+})->name('landing-page');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
