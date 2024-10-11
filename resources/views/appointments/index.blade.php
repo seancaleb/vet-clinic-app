@@ -1,9 +1,12 @@
 @php
     use Carbon\Carbon;
 
-    function format_date($date)
-    {
-        return Carbon::parse($date)->format('m/d/Y');
+    // Need to check if exists to avoid error in testing
+    if (!function_exists('format_date')) {
+        function format_date($date)
+        {
+            return Carbon::parse($date)->format('m/d/Y');
+        }
     }
 @endphp
 
