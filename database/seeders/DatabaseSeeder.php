@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder {
         ]);
 
         Appointment::factory()->create([
+            'user_id' => 2,
             'pet_name' => 'Ash',
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, in soluta ut tenetur, reprehenderit labore incidunt, ipsam repellat placeat iure numquam. Totam ex odit facere vero molestiae, laborum animi omnis veniam sapiente repellat qui eum? Doloremque.',
             'appointment_date' => now(),
