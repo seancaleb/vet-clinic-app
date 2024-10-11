@@ -55,3 +55,11 @@ function createAppointment($user_id) {
         'user_id' => $user_id
     ]);
 }
+
+function createAppointments($count, $appointment_create_params = []) {
+    if (!$appointment_create_params) {
+        return Appointment::factory($count)->create();
+    }
+
+    return Appointment::factory($count)->create($appointment_create_params);
+}
