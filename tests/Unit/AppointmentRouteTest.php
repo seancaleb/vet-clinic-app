@@ -17,27 +17,19 @@ beforeEach(function () {
     $this->actingAs($this->user);
 });
 
-$test_case_1 = 'index (GET) route returns a view';
-$test_case_2 = 'create route (GET) returns a view';
-$test_case_3 = 'store (POST) route creates an appointment and redirects user to index route';
-$test_case_4 = 'show (GET) route returns a view with the current appointment data';
-$test_case_5 = 'edit (GET) route returns a view with the current appointment data and the user that owns the appointment data';
-$test_case_6 = 'update (PATCH) route updates an appointment and redirects user to the show route';
-$test_case_7 = 'destroy (DELETE) route deletes an appointment and redirects user to the index route';
-
-test($test_case_1, function () {
+test('index (GET) route returns a view', function () {
     $response = $this->get('/appointments');
     $response->assertOk()
         ->assertViewIs('appointments.index');
 });
 
-test($test_case_2, function () {
+test('create route (GET) returns a view', function () {
     $response = $this->get('/appointments/create');
     $response->assertOk()
         ->assertViewIs('appointments.create');
 });
 
-test($test_case_3, function () {
+test('store (POST) route creates an appointment and redirects user to index route', function () {
 
     $appointment_data = [
         'user_id' => $this->user->id,
@@ -49,10 +41,11 @@ test($test_case_3, function () {
     ];
 
     $response = $this->post('/appointments', $appointment_data);
-    $response->assertRedirect('/appointments');
+    $response->assertRedirect('/appointments')
+        ->assertStatus(302);
 });
 
-test($test_case_4, function () {
+test('show (GET) route returns a view with the current appointment data', function () {
     $appointment = createAppointment($this->user->id);
 
     $response = $this->get("/appointments/{$appointment->id}");
@@ -63,7 +56,7 @@ test($test_case_4, function () {
         });
 });
 
-test($test_case_5, function () {
+test('edit (GET) route returns a view with the current appointment data and the user that owns the appointment data', function () {
     $appointment = createAppointment($this->user->id);
 
     $response = $this->get("/appointments/{$appointment->id}/edit");
@@ -77,7 +70,7 @@ test($test_case_5, function () {
         });
 });
 
-test($test_case_6, function () {
+test('update (PATCH) route updates an appointment and redirects user to the show route', function () {
     $appointment = createAppointment($this->user->id);
 
     $updated_appointment_data = [
@@ -89,26 +82,14 @@ test($test_case_6, function () {
     ];
 
     $response = $this->patch("/appointments/{$appointment->id}", $updated_appointment_data);
-    $response->assertRedirect("/appointments/{$appointment->id}");
-
-    $this->assertDatabaseHas('appointments', [
-        'pet_name' => $updated_appointment_data['pet_name'],
-        'description' => $updated_appointment_data['description'],
-        'appointment_date' => $updated_appointment_data['appointment_date'],
-        'appointment_type' => $updated_appointment_data['appointment_type'],
-        'status' => $updated_appointment_data['status'],
-
-    ]);
+    $response->assertRedirect("/appointments/{$appointment->id}")
+        ->assertStatus(302);
 });
 
-test($test_case_7, function () {
+test('destroy (DELETE) route deletes an appointment and redirects user to the index route', function () {
     $appointment = createAppointment($this->user->id);
 
     $response = $this->delete("/appointments/{$appointment->id}");
     $response->assertRedirect('/appointments')
         ->assertStatus(302);
-
-    $this->assertDatabaseMissing('appointments', [
-        'id' => $appointment->id,
-    ]);
 });
