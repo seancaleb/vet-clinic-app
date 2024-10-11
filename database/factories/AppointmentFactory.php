@@ -16,12 +16,13 @@ class AppointmentFactory extends Factory {
      */
     public function definition(): array {
         return [
-            'user_id' => 2,
+            // 'user_id' => 2,
+            'user_id' => User::factory(),
             'pet_name' => fake()->name(),
             'description' => fake()->sentence(36),
             'appointment_date' => fake()->date(),
             'appointment_type' => fake()->randomElement(['vaccination', 'surgery', 'check-up']),
-            'status' => fake()->randomElement(['pending', 'confirmed', 'completed', 'cancelled']),
+            'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled']),
         ];
     }
 }

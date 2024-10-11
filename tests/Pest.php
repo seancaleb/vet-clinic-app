@@ -11,9 +11,12 @@
 |
 */
 
+use App\Models\Appointment;
+use App\Models\User;
+
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +44,22 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
+function createUser($is_admin = 'patient') {
+    return User::factory()->create([
+        'role' => $is_admin
+    ]);
+}
+
+function createAppointment($user_id) {
+    return Appointment::factory()->create([
+        'user_id' => $user_id
+    ]);
+}
+
+function createAppointments($count, $appointment_create_params = []) {
+    if (!$appointment_create_params) {
+        return Appointment::factory($count)->create();
+    }
+
+    return Appointment::factory($count)->create($appointment_create_params);
 }
