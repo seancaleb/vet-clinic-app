@@ -6,7 +6,7 @@
     'id' => $overlayId,
     'data-state' => 'closed',
     'class' =>
-        'fixed inset-0 z-50 bg-neutral-950/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fill-mode-forwards hidden',
+        'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fill-mode-forwards hidden',
 ]) !!}>
     <div {!! $attributes->merge([
         'id' => $contentId,

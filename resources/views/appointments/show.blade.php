@@ -12,8 +12,8 @@
 
     <x-slot:actions>
         <x-ui.primary-button form="delete-appointment-form"
-            class="bg-red-700 hover:bg-red-800 focus:ring-red-300 flex items-center gap-2"><svg
-                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
+            class="bg-transparent hover:bg-red-50 focus:ring-red-300 border border-red-800/20 flex items-center gap-2 text-red-800 whitespace-nowrap justify-center"><svg
+                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-800" viewBox="0 0 24 24">
                 <path fill="currentColor"
                     d="M7 21q-.825 0-1.412-.587T5 19V6q-.425 0-.712-.288T4 5t.288-.712T5 4h4q0-.425.288-.712T10 3h4q.425 0 .713.288T15 4h4q.425 0 .713.288T20 5t-.288.713T19 6v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zm-7 11q.425 0 .713-.288T11 16V9q0-.425-.288-.712T10 8t-.712.288T9 9v7q0 .425.288.713T10 17m4 0q.425 0 .713-.288T15 16V9q0-.425-.288-.712T14 8t-.712.288T13 9v7q0 .425.288.713T14 17M7 6v13z" />
             </svg>Delete Appointment</x-ui.primary-button>
@@ -87,7 +87,7 @@
 
         <div class='mt-6'>
             <x-ui.link href="{{ route('appointments.edit', ['appointment' => $appointment]) }}"
-                class="flex items-center gap-2">
+                class="flex items-center gap-2 w-full sm:w-fit">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="M14 21v-1.65q0-.2.075-.387t.225-.338l5.225-5.2q.225-.225.5-.325t.55-.1q.3 0 .575.113t.5.337l.925.925q.2.225.313.5t.112.55t-.1.563t-.325.512l-5.2 5.2q-.15.15-.337.225T16.65 22H15q-.425 0-.712-.287T14 21m7.5-5.575l-.925-.925zm-6 5.075h.95l3.025-3.05l-.925-.925l-3.05 3.025zM6 22q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h7.175q.4 0 .763.15t.637.425l4.85 4.85q.275.275.425.638t.15.762v1.425q0 .425-.288.713T19 11.25t-.712-.288T18 10.25V9h-4q-.425 0-.712-.288T13 8V4H6v16h5q.425 0 .713.288T12 21t-.288.713T11 22zm0-2V4zm13.025-3.025l-.475-.45l.925.925z" />
