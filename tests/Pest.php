@@ -44,9 +44,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function createUser($is_admin = 'patient') {
+function createUser($is_admin = false) {
     return User::factory()->create([
-        'role' => $is_admin
+        'role' => $is_admin ? 'admin' : 'patient'
     ]);
 }
 

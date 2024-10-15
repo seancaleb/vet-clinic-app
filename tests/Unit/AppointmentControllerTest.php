@@ -6,7 +6,7 @@ use Carbon\Carbon;
 beforeEach(function () {
     // Creates both a simulated user and admin then logs them in before each test case to grant access for all logic of 'appointment' routes.
     $this->user = createUser();
-    $this->admin = createUser('admin');
+    $this->admin = createUser(true);
 });
 
 test('index method will return all appointments of users for admin roles', function () {

@@ -10,7 +10,7 @@
 
 beforeEach(function () {
     // Creates a simulated user and logs them in before each test case to grant access for all 'appointment' routes.
-    $this->user = createUser('admin');
+    $this->user = createUser(true);
     $this->actingAs($this->user);
 });
 
