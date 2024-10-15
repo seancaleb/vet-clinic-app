@@ -63,3 +63,7 @@ function createAppointments($count, $appointment_create_params = []) {
 
     return Appointment::factory($count)->create($appointment_create_params);
 }
+
+function createUsers($count) {
+    return User::factory($count)->create();
+}
