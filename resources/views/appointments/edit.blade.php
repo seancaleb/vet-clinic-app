@@ -5,6 +5,7 @@
 
     $appointment_type_options = ['check-up', 'vaccination', 'surgery'];
     $status_options = ['pending', 'confirmed', 'cancelled'];
+    $appointment_date = Carbon::parse($appointment->appointment_date)->format('m/d/Y');
 @endphp
 
 <x-app-layout>
@@ -60,8 +61,7 @@
 
             <div>
                 <x-input-label for="appointment_date" :value="__('Date of appointment')" class="block mb-2 text-sm font-medium" />
-                <x-ui.input-date-picker :id="'appointment_date'" :name="'appointment_date'"
-                    value="{{ Carbon::parse($appointment->appointment_date)->format('m/d/Y') }}" />
+                <x-ui.input-date-picker :id="'appointment_date'" :name="'appointment_date'" value="{{ $appointment_date }}" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>
 
