@@ -11,7 +11,7 @@
         Create appointment
     </x-slot:header>
 
-    <section class='section mx-auto max-w-xl'>
+    <section class='section mx-auto max-w-2xl'>
         <header>
             <h2 class="text-lg font-medium text-gray-800">
                 Book a new appointment
@@ -51,9 +51,7 @@
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>
 
-            <div class="flex items-center gap-4">
-                <x-ui.primary-button>Create</x-ui.primary-button>
-            </div>
+            <x-ui.primary-button class="w-full sm:w-fit">Create</x-ui.primary-button>
         </form>
     </section>
 </x-app-layout>

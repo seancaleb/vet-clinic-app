@@ -6,7 +6,7 @@
 
 @props(['wrapperId', 'datepickerStartId', 'datepickerEndId'])
 
-<div date-rangepicker {!! $attributes->merge(['id' => $wrapperId, 'datepicker-min-date' => $min_date, 'class' => 'flex items-center']) !!}>
+<div date-rangepicker datepicker-autohide {!! $attributes->merge(['id' => $wrapperId, 'datepicker-min-date' => $min_date, 'class' => 'flex items-center']) !!}>
     <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" viewBox="0 0 24 24">

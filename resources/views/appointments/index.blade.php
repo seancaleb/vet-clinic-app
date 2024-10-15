@@ -20,15 +20,17 @@
     </x-slot:header>
 
     <x-slot:actions>
-        <div class="flex items-center gap-2">
-            <x-ui.link href="{{ route('appointments.create') }}" class="flex items-center gap-2"><svg
-                    xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+            <x-ui.link href="{{ route('appointments.create') }}"
+                class="flex items-center gap-2 whitespace-nowrap justify-center"><svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 text-white" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="M12 21q-.425 0-.712-.288T11 20v-7H4q-.425 0-.712-.288T3 12t.288-.712T4 11h7V4q0-.425.288-.712T12 3t.713.288T13 4v7h7q.425 0 .713.288T21 12t-.288.713T20 13h-7v7q0 .425-.288.713T12 21" />
                 </svg>
                 New Appointment</x-ui.link>
             @if ($user->role === 'admin')
-                <x-ui.alternative-button id="dialog-button" class="flex items-center gap-2"><svg
+                <x-ui.alternative-button id="dialog-button"
+                    class="flex items-center gap-2 whitespace-nowrap justify-center"><svg
                         xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" viewBox="0 0 24 24">
                         <path fill="currentColor"
                             d="M11 18q-.425 0-.712-.288T10 17t.288-.712T11 16h2q.425 0 .713.288T14 17t-.288.713T13 18zm-4-5q-.425 0-.712-.288T6 12t.288-.712T7 11h10q.425 0 .713.288T18 12t-.288.713T17 13zM4 8q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z" />
@@ -87,7 +89,7 @@
         </div>
     </x-slot:actions>
 
-    <section class="space-y-6">
+    <section class="space-y-6 p-6 sm:p-0">
         <div class="grid gap-6 justify-items-start">
             @if ($appointments->count() > 0)
                 <table>

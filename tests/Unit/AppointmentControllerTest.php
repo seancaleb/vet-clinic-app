@@ -1,11 +1,12 @@
 <?php
 
 use App\Models\Appointment;
+use Carbon\Carbon;
 
 beforeEach(function () {
     // Creates both a simulated user and admin then logs them in before each test case to grant access for all logic of 'appointment' routes.
     $this->user = createUser();
-    $this->admin = createUser('admin');
+    $this->admin = createUser(true);
 });
 
 test('index method will return all appointments of users for admin roles', function () {
@@ -61,9 +62,86 @@ test('store method will create a new appointment', function () {
     $this->assertEquals($appointment_data['description'], $last_appointment->description);
 });
 
-/**
- * TODO: Implement the test cases for the following:
- *  1. edit method
- *  2. update method
- *  3. destroy method
- */
+test('edit method will show correct input values for users', function () {
+    $this->actingAs($this->user);
+
+    $appointment = createAppointment($this->user->id);
+
+    $formatted_date = Carbon::parse($appointment->appointment_date)->format('m/d/Y');
+
+    $response = $this->get("/appointments/{$appointment->id}/edit");
+    $response->assertStatus(200)
+        ->assertSee("value=\"{$appointment->description}\"", false)
+        ->assertSee("value=\"{$appointment->pet_name}\"", false)
+        ->assertSee("value=\"{$appointment->appointment_type}\"", false)
+        ->assertDontSee("value=\"{$appointment->status}\"", false)
+        ->assertSee("value=\"{$formatted_date}\"", false);
+});
+
+test('edit method will show correct input values for admin', function () {
+    $this->actingAs($this->admin);
+
+    $appointment = createAppointment($this->user->id);
+
+    $formatted_date = Carbon::parse($appointment->appointment_date)->format('m/d/Y');
+
+    $response = $this->get("/appointments/{$appointment->id}/edit");
+    $response->assertStatus(200)
+        ->assertSee("value=\"{$appointment->description}\"", false)
+        ->assertSee("value=\"{$appointment->pet_name}\"", false)
+        ->assertSee("value=\"{$appointment->appointment_type}\"", false)
+        ->assertSee("value=\"{$appointment->status}\"", false)
+        ->assertSee("value=\"{$formatted_date}\"", false);
+});
+
+test('update method will trigger validation errors and redirect back to the form', function () {
+    $this->actingAs($this->user);
+
+    $appointment = createAppointment($this->user->id);
+
+    $formatted_date = Carbon::parse($appointment->appointment_date)->format('m/d/Y');
+
+    $response = $this->patch("/appointments/{$appointment->id}", [
+        'description' => '',
+        'pet_name' => '',
+    ]);
+
+    $response->assertStatus(302)
+        ->assertInvalid(['description', 'pet_name']);
+});
+
+test('update method will successfully redirect back to the appointment view', function () {
+    $this->actingAs($this->user);
+
+    $appointment = createAppointment($this->user->id);
+    $updated_appointment = [
+        'description' => 'Lorem ipsum dolor sit amet consectetur.',
+        'pet_name' => 'King',
+        'appointment_type' => 'check-up',
+        'appointment_date' => '11/11/2024'
+    ];
+
+    $formatted_date = Carbon::parse($updated_appointment['appointment_date'])->format('Y-m-d');
+
+    $response = $this->patch("/appointments/{$appointment->id}", $updated_appointment);
+
+    $response->assertRedirect("/appointments/{$appointment->id}")
+        ->assertStatus(302);
+
+    $this->assertDatabaseHas("appointments", [
+        ...$updated_appointment,
+        'appointment_date' => $formatted_date
+    ]);
+});
+
+test('delete method will delete an appointment and successfully redirects back to the appointments view', function () {
+    $this->actingAs($this->user);
+
+    $appointment = createAppointment($this->user->id);
+
+    $response = $this->delete("/appointments/{$appointment->id}");
+    $response->assertRedirect('/appointments')
+        ->assertStatus(302);
+
+    $this->assertDatabaseMissing('appointments', ['id' => $appointment->id]);
+});

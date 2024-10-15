@@ -44,9 +44,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function createUser($is_admin = 'patient') {
+function createUser($is_admin = false) {
     return User::factory()->create([
-        'role' => $is_admin
+        'role' => $is_admin ? 'admin' : 'patient'
     ]);
 }
 
@@ -62,4 +62,8 @@ function createAppointments($count, $appointment_create_params = []) {
     }
 
     return Appointment::factory($count)->create($appointment_create_params);
+}
+
+function createUsers($count) {
+    return User::factory($count)->create();
 }
