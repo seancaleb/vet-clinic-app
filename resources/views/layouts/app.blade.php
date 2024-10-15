@@ -24,13 +24,22 @@
     <div class="relative bg-gray-100 h-screen">
         @include('layouts.navigation')
 
-        <div class="grid content-start fixed top-0 left-[256px] right-0 bottom-0 z-10">
+        <div class="grid content-start fixed top-0 left-0 lg:left-[256px] right-0 bottom-0 z-10">
             <header>
-                <div class="p-6 bg-white h-14 flex items-center justify-end border-b border-gray-300">
+                <div class="p-6 bg-white h-14 flex items-center justify-between border-b border-gray-300">
+                    <div>
+                        <div role=button class='lg:hidden' id="menu-burger-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z" />
+                            </svg>
+                        </div>
+                    </div>
                     <span class="text-gray-800 text-[0.9375rem] tracking-[-0.02em] leading-none">
                         {{ Auth::user()->name }} 👋🏻</span>
                 </div>
-                <div class="p-6 bg-white h-14 flex items-center justify-between gap-6 border-b border-gray-300">
+                <div
+                    class="p-6 bg-white sm:h-14 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 border-b border-gray-300">
                     <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
                         {{ $header }}
                     </h2>
@@ -40,26 +49,10 @@
             </header>
 
             {{-- Page Content  --}}
-            <main class="p-6 overflow-y-auto">
+            <main class="sm:p-6 overflow-y-auto">
                 {{ $slot }}
             </main>
         </div>
-
-
-
-        {{-- <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <!-- Page Content -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            {{ $slot }}
-        </main> --}}
     </div>
 </body>
 
