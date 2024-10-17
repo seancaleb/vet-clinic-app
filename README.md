@@ -7,60 +7,99 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Veterinary Clinic Appointment System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A Laravel-based appointment booking system for veterinary clinics that allows users to book, manage, and cancel pet appointments. Features include user authentication, appointment management, email notifications, and a responsive front-end built with Tailwind CSS.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   User registration and login with email verification
+-   Appointment booking, editing, and cancellation
+-   Admin panel for appointment and user management
+-   Email notifications for appointment confirmations and reminders
+-   Responsive user interfaces
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+> Note: Make sure PHP is installed on your machine to be able to run this project.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Clone this repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone <REPO_URL> <YOUR_PROJECT_NAME>
+```
 
-## Laravel Sponsors
+-   Go to project directory `cd <YOUR_PROJECT_NAME>`
+-   Run `npm install`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Setting up the project
 
-### Premium Partners
+-   Create a database (this project uses **mysql**)
+-   Create a **.env** file and copy the contents from **.env.example**
+-   Run the command below to generate a new app key
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+php artisan key:generate
+```
 
-## Contributing
+### 3. Configuring the database (migration and data scaffolding)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   Initialize the following values in your **.env** file to be able to connect to your database
 
-## Code of Conduct
+```
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   Run migrations and seed data in the database
 
-## Security Vulnerabilities
+```
+php artisan migrate:fresh --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Set up Gmail SMTP
 
-## License
+-   Generate an app password from your Google account
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> You can follow the instructions [here](https://knowledge.workspace.google.com/kb/how-to-create-app-passwords-000009237) to generate an app password from Google that can be used to integrate Gmail in this application
+
+-   Initialize the following values in your **.env** file to be able to integrate Gmail SMTP
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=<YOUR_MAIL_USERNAME> // ex. vethub.app@gmail.com
+MAIL_PASSWORD=<YOUR_MAIL_APP_PASSWORD>
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="<YOUR_MAIL_ADDRESS>" // ex. vethub.app@gmail.com
+MAIL_FROM_NAME="<YOUR_MAIL_NAME>" // ex. VetHub
+```
+
+### 5. Run the project locally
+
+-   To run the project locally, run `php artisan serve` and `npm run dev`
+
+## Running tests
+
+### 1. Configuring the testing environment
+
+-   Create a **.env.testing** file and copy the contents from **.env**
+-   Modify the following values in your **.env.testing** file to be able to connect to your mirror database for testing
+
+> Note: We'll be using sqlite as the default mirror database for testing
+
+```
+DB_CONNECTION=sqlite
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=:memory:
+```
+
+### 2. Run tests
+
+-   To run tests, run `php artisan test`
