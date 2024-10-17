@@ -21,7 +21,7 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col justify-center items-center sm:pt-0 bg-gray-100">
+    <div class="min-h-screen flex flex-col justify-center items-center sm:pt-0 bg-white sm:bg-gray-100">
         <div class="absolute top-8 left-12 hidden sm:block">
             <a href="/" class="w-full h-9 block">
                 <x-application-logo />
