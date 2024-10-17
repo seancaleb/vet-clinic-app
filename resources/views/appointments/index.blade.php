@@ -74,7 +74,7 @@
                 <section class="py-32 w-full text-gray-500">
                     <div class="grid gap-2 text-center w-full justify-items-center">
                         <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
-                            No active appointments found.
+                            No active appointments.
                         </h2>
                         <p class="max-w-[50ch]">No scheduled appointments were found.</p>
                     </div>
