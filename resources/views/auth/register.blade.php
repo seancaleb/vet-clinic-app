@@ -33,13 +33,13 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-6">
+        <div class="flex flex-col gap-6 items-stretch sm:flex-row sm:gap-0 sm:items-center justify-end mt-6">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-ui.primary-button class="ms-3">
+            <x-ui.primary-button class="sm:ms-3">
                 Register
             </x-ui.primary-button>
         </div>

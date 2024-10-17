@@ -81,7 +81,7 @@
 
             <div class="col-span-1 space-y-1">
                 <div class="text-sm text-gray-500">Description</div>
-                <div>{{ $appointment->description }}</div>
+                <div class="whitespace-pre-wrap">{{ $appointment->description }}</div>
             </div>
         </div>
 

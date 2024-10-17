@@ -21,14 +21,18 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div class="absolute top-8 left-12">
+    <div class="min-h-screen flex flex-col justify-center items-center sm:pt-0 bg-white sm:bg-gray-100">
+        <div class="absolute top-8 left-12 hidden sm:block">
             <a href="/" class="w-full h-9 block">
                 <x-application-logo />
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 overflow-hidden p-4 sm:p-8 bg-white shadow sm:rounded-xl">
+        <div class="w-full sm:max-w-md overflow-hidden px-6 py-8 sm:p-8 bg-white sm:shadow sm:rounded-xl">
+            <a href="/" class="w-full h-9 block sm:hidden mb-6">
+                <x-application-logo />
+            </a>
+
             <header class="mb-6">
                 <h2 class="text-lg font-medium text-gray-800">
                     {{ $header }}

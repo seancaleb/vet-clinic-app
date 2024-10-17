@@ -6,13 +6,13 @@
     'id' => $overlayId,
     'data-state' => 'closed',
     'class' =>
-        'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fill-mode-forwards hidden',
+        'fixed inset-0 z-[100] bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fill-mode-forwards hidden',
 ]) !!}>
     <div {!! $attributes->merge([
         'id' => $contentId,
         'data-state' => 'closed',
         'class' =>
-            'fixed left-[1.5rem] sm:left-[50%] top-[50%] right-[1.5rem] translate-x-0 sm:translate-x-[-50%] translate-y-[-50%] z-50 w-auto sm:w-full grid max-w-lg mx-auto sm:mx-0 gap-6 border bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg md:w-full fill-mode-forwards',
+            'fixed left-[1.5rem] sm:left-[50%] top-[50%] right-[1.5rem] translate-x-0 sm:translate-x-[-50%] translate-y-[-50%] z-50 w-auto sm:w-full grid max-w-lg mx-auto sm:mx-0 gap-6 border bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-xl md:w-full fill-mode-forwards',
     ]) !!}>
 
         {{-- Header  --}}

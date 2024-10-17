@@ -34,7 +34,7 @@
                             {{-- Filter by date range  --}}
                             <div>
                                 <x-ui.input-label :value="__('Filter by date range')" />
-                                <x-ui.input-date-picker :wrapperId="__('datepicker-filter')" :datepickerStartId="__('datepicker-filter-start')" :datepickerEndId="__('datepicker-filter-end')" />
+                                <x-ui.input-date-range-picker :wrapperId="__('datepicker-filter')" :datepickerStartId="__('datepicker-filter-start')" :datepickerEndId="__('datepicker-filter-end')" />
                             </div>
 
                             {{-- Filter by status  --}}

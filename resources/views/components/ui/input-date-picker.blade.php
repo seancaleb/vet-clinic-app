@@ -1,10 +1,10 @@
 @php
     use Carbon\Carbon;
 
-    $min_date = Carbon::now()->format('m/d/Y');
+    $min_date = Carbon::now()->addDay()->format('m/d/Y');
 @endphp
 
-@props(['id', 'datepickerOrientation' => 'top right', 'name'])
+@props(['id', 'datepickerOrientation' => 'top right', 'name', 'minDate' => $min_date])
 
 <div class="relative max-w-sm">
     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -18,7 +18,7 @@
         'type' => 'text',
         'datepicker-orientation' => $datepickerOrientation,
         'name' => $name,
-        'datepicker-min-date' => $min_date,
+        'datepicker-min-date' => $minDate,
         'placeholder' => 'Select date',
         'class' =>
             'h-[42px] bg-gray-50 border border-gray-300 text-gray-800 text-base rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full ps-10 px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500',

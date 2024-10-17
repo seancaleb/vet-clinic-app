@@ -4,7 +4,7 @@
 
 @layer base {
     table {
-        @apply text-sm w-full bg-white rounded-xl overflow-clip;
+        @apply text-sm w-full bg-white;
     }
 
     th {

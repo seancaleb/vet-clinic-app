@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-6">
-            <x-ui.primary-button class="ms-3">
+            <x-ui.primary-button class="w-full sm:w-fit">
                 Reset Password
             </x-ui.primary-button>
         </div>

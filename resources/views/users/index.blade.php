@@ -27,16 +27,16 @@
 <x-app-layout>
     <x-slot:header>{{ __('All Users') }}</x-slot:header>
 
-    <section class="space-y-6">
-        <div class="space-y-6">
+    <section class="space-y-6 p-6 sm:p-0">
+        <div class="space-y-6 overflow-x-auto rounded-xl">
             @if ($users->count() > 1)
                 <table>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>No. of appointments</th>
-                        <th>Created at</th>
+                        <th class="whitespace-nowrap">No. of appointments</th>
+                        <th class="whitespace-nowrap">Created at</th>
                         <th>Status</th>
                     </tr>
                     @foreach ($users as $user)
@@ -45,7 +45,7 @@
                         @endif
 
                         <tr onclick="window.location='{{ route('users.show', ['user' => $user]) }}'">
-                            <td class='text-gray-800 font-medium'>{{ $user->name }}</td>
+                            <td class='text-gray-800 font-medium whitespace-nowrap'>{{ $user->name }}</td>
                             <td class='whitespace-nowrap'>{{ $user->email }}</td>
                             <td class='whitespace-nowrap'>{{ ucfirst($user->role) }}</td>
                             <td class='whitespace-nowrap'>{{ get_total_appointments($user->appointments->count()) }}</td>

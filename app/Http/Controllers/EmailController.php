@@ -15,7 +15,7 @@ class EmailController extends Controller {
      */
     public function sendBookingConfirmationEmail($user, $appointment) {
         $to_email = $user->email;
-        $mail_subject = "Booking Appointment Scheduled #{$appointment->id}";
+        $mail_subject = "Booking Appointment Submitted #{$appointment->id}";
 
         Mail::to($to_email)->send(new BookingConfirmationEmail($user, $appointment, $mail_subject));
     }
