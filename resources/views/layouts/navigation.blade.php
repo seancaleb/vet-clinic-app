@@ -12,7 +12,9 @@
 
         {{-- Navigation logo  --}}
         <div class="h-8 mb-6">
-            <x-application-logo />
+            <a href="{{ route('dashboard') }}">
+                <x-application-logo />
+            </a>
         </div>
 
         {{-- Navigation  --}}
