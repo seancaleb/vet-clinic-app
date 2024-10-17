@@ -29,22 +29,21 @@
             @method('PATCH')
 
             <div>
-                <x-input-label for="description" :value="__('Description')" />
-                <x-ui.input-text id="description" name="description" type="text" value="{{ $appointment->description }}"
-                    required />
+                <x-ui.input-label for="description" :value="__('Description')" />
+                <x-ui.input-textarea id='description' name="description" :value="$appointment->description" required />
                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
             </div>
 
             <div>
-                <x-input-label for="pet_name" :value="__('Pet name')" />
+                <x-ui.input-label for="pet_name" :value="__('Pet name')" />
                 <x-ui.input-text id="pet_name" name="pet_name" type="text" value="{{ $appointment->pet_name }}"
                     required />
                 <x-input-error class="mt-2" :messages="$errors->get('pet_name')" />
             </div>
 
             <div>
-                <x-input-label for="appointment_type" class="block mb-2 text-sm font-medium">Appointment
-                    type</x-input-label>
+                <x-ui.input-label for="appointment_type">Appointment
+                    type</x-ui.input-label>
                 <x-ui.input-select :id="'appoinment_type'" :name="'appointment_type'" :defaultSelectedTitle="'Select an appointment'" :options="$appointment_type_options"
                     :selected="$appointment->appointment_type" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_type')" />
@@ -52,7 +51,7 @@
 
             @if ($user->role === 'admin')
                 <div>
-                    <x-input-label for="status" class="block mb-2 text-sm font-medium">Status</x-input-label>
+                    <x-ui.input-label for="status">Status</x-ui.input-label>
                     <x-ui.input-select :id="'status'" :name="'status'" :defaultSelectedTitle="'Select status'" :options="$status_options"
                         :selected="$appointment->status" />
                     <x-input-error class="mt-2" :messages="$errors->get('status')" />
@@ -60,7 +59,7 @@
             @endif
 
             <div>
-                <x-input-label for="appointment_date" :value="__('Date of appointment')" class="block mb-2 text-sm font-medium" />
+                <x-ui.input-label for="appointment_date" :value="__('Date of appointment')" />
                 <x-ui.input-date-picker :id="'appointment_date'" :name="'appointment_date'" value="{{ $appointment_date }}" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>

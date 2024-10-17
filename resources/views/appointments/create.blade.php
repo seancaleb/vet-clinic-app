@@ -27,7 +27,7 @@
 
             <div>
                 <x-ui.input-label for="description" :value="__('Description')" />
-                <x-ui.input-text id="description" name="description" type="text" required />
+                <x-ui.input-textarea id='description' name="description" required />
                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
             </div>
 
@@ -38,15 +38,14 @@
             </div>
 
             <div>
-                <x-input-label for="appointment_type" class="block mb-2 text-sm font-medium">Appointment
-                    type</x-input-label>
+                <x-ui.input-label for="appointment_type" :value="__('Appointment Type')" />
                 <x-ui.input-select :id="'appoinment_type'" :name="'appointment_type'" :defaultSelectedTitle="'Select an appointment'" :options="$appointment_type_options" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_type')" />
             </div>
 
 
             <div>
-                <x-input-label for="appointment_date" :value="__('Date of appointment')" class="block mb-2 text-sm font-medium" />
+                <x-ui.input-label for="appointment_date" :value="__('Date of appointment')" />
                 <x-ui.input-date-picker :id="'appointment_date'" :name="'appointment_date'" />
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>

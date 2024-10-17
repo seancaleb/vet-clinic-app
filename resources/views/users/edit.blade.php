@@ -23,19 +23,19 @@
             @method('PATCH')
 
             <div>
-                <x-input-label for="name" :value="__('Name')" />
+                <x-ui.input-label for="name" :value="__('Name')" />
                 <x-ui.input-text id="name" name="name" type="text" value="{{ $user->name }}" required />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
 
             <div>
-                <x-input-label for="email" :value="__('Email')" />
+                <x-ui.input-label for="email" :value="__('Email')" />
                 <x-ui.input-text id="email" name="email" type="email" value="{{ $user->email }}" required />
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
             </div>
 
             <div>
-                <x-input-label for="role" class="block mb-2 text-sm font-medium">Role</x-input-label>
+                <x-ui.input-label for="role" :value="__('Role')" />
                 <x-ui.input-select :id="'role'" :name="'role'" :defaultSelectedTitle="'Select role'" :options="$role_options"
                     :selected="$user->role" />
                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
