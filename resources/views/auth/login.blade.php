@@ -31,7 +31,7 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-6">
+        <div class="flex flex-col gap-6 items-stretch sm:flex-row sm:gap-0 sm:items-center justify-end mt-6">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     href="{{ route('password.request') }}">
@@ -39,7 +39,7 @@
                 </a>
             @endif
 
-            <x-ui.primary-button class="ms-3">
+            <x-ui.primary-button class="sm:ms-3">
                 Log in
             </x-ui.primary-button>
         </div>

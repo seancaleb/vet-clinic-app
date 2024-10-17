@@ -6,7 +6,11 @@
 
 @props(['wrapperId', 'datepickerStartId', 'datepickerEndId'])
 
-<div date-rangepicker datepicker-autohide {!! $attributes->merge(['id' => $wrapperId, 'datepicker-min-date' => $min_date, 'class' => 'flex items-center']) !!}>
+<div date-rangepicker datepicker-autohide {!! $attributes->merge([
+    'id' => $wrapperId,
+    'datepicker-min-date' => $min_date,
+    'class' => 'grid gap-2 sm:flex sm:items-center',
+]) !!}>
     <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" viewBox="0 0 24 24">
@@ -18,7 +22,7 @@
             'id' => $datepickerStartId,
             'name' => 'start',
             'type' => 'text',
-            'placeholder' => 'Select start date',
+            'placeholder' => 'Start date',
             'class' =>
                 'h-[42px] bg-gray-50 border border-gray-300 text-gray-800 text-base rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full ps-10 px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500',
         ]) !!}>
@@ -35,7 +39,7 @@
             'id' => $datepickerEndId,
             'name' => 'end',
             'type' => 'text',
-            'placeholder' => 'Select end date',
+            'placeholder' => 'End date',
             'class' =>
                 'h-[42px] bg-gray-50 border border-gray-300 text-gray-800 text-base rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full ps-10 px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500',
         ]) !!}>

@@ -14,7 +14,7 @@
         </div>
 
         <div class="flex justify-end mt-6">
-            <x-ui.primary-button class="ms-3">
+            <x-ui.primary-button class="w-full sm:w-fit">
                 Confirm
             </x-ui.primary-button>
         </div>

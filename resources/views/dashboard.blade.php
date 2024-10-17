@@ -5,7 +5,7 @@
 
     <section class="py-32 w-full text-gray-500">
         <div class="grid gap-4 text-center w-full justify-items-center">
-            <h2 class="font-bold text-6xl text-gray-800 leading-none tracking-[-0.025em]">
+            <h2 class="font-bold text-5xl sm:text-6xl text-gray-800 leading-none tracking-[-0.025em]">
                 Welcome to VetHub
             </h2>
 

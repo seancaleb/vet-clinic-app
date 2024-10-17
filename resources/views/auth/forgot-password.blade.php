@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex items-center justify-start mt-6">
-            <x-ui.primary-button>
+            <x-ui.primary-button class="w-full sm:w-fit">
                 Email Password Reset Link
             </x-ui.primary-button>
         </div>

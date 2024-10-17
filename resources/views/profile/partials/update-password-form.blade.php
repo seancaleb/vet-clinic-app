@@ -36,7 +36,8 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-ui.primary-button>{{ __('Save') }}</x-ui.primary-button>
+            <x-ui.primary-button
+                class="flex items-center gap-2 w-full justify-center sm:w-fit">{{ __('Save') }}</x-ui.primary-button>
 
             @if (session('status') === 'password-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

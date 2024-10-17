@@ -51,7 +51,7 @@
                 <x-input-error class="mt-2" :messages="$errors->get('appointment_date')" />
             </div>
 
-            <x-ui.primary-button class="w-full sm:w-fit">Create</x-ui.primary-button>
+            <x-ui.primary-button class="w-full sm:w-fit">Create Appointment</x-ui.primary-button>
         </form>
     </section>
 </x-app-layout>

@@ -1,5 +1,5 @@
 <aside id="menu-sidebar" data-state="closed"
-    class="fixed top-0 bottom-0 left-0 bg-white border-r border-gray-300 min-w-[256px] z-[100] transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left lg:data-[state=closed]:slide-out-to-left-0 lg:data-[state=open]:slide-in-from-left-0 fill-mode-forwards">
+    class="fixed top-0 bottom-0 left-0 bg-white border-r border-gray-300 min-w-[256px] z-[200] lg:z-10 transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left lg:data-[state=closed]:slide-out-to-left-0 lg:data-[state=open]:slide-in-from-left-0 fill-mode-forwards">
     <div class="p-6">
         {{-- Close button  --}}
         <div id="menu-sidebar-close-button" class='absolute lg:hidden top-4 right-4 cursor-pointer'><svg
@@ -81,5 +81,5 @@
 </aside>
 
 <div id="overlay" data-state="closed"
-    class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 hidden fill-mode-forwards">
+    class="fixed inset-0 z-[100] bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 hidden fill-mode-forwards">
 </div>
