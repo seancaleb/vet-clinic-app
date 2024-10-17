@@ -84,6 +84,10 @@ MAIL_FROM_NAME="<YOUR_MAIL_NAME>" // ex. VetHub
 
 -   To run the project locally, run `php artisan serve` and `npm run dev`
 
+## Sending email notification reminders
+
+-   To send email notifications, run `php artisan send:reminders`
+
 ## Running tests
 
 ### 1. Configuring the testing environment
