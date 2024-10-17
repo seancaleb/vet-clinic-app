@@ -14,25 +14,18 @@ class DatabaseSeeder extends Seeder {
     public function run(): void {
         User::factory()->create([
             'name' => 'John Doe',
-            'email' => 'anyma.seancaleb@gmail.com',
+            'email' => 'johndoe@test.com',
             'password' => bcrypt('pass123.'),
             'role' => 'admin',
         ]);
 
         User::factory()->create([
             'name' => 'Jane Doe',
-            'email' => 'anyma.sean@gmail.com',
+            'email' => 'janedoe@test.com',
             'password' => bcrypt('pass123.'),
             'role' => 'patient',
         ]);
 
-        Appointment::factory()->create([
-            'user_id' => 2,
-            'pet_name' => 'Ash',
-            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, in soluta ut tenetur, reprehenderit labore incidunt, ipsam repellat placeat iure numquam. Totam ex odit facere vero molestiae, laborum animi omnis veniam sapiente repellat qui eum? Doloremque.',
-            'appointment_date' => now(),
-            'appointment_type' => 'check-up',
-            'status' => 'pending'
-        ]);
+        Appointment::factory(20)->create();
     }
 }
