@@ -119,6 +119,20 @@ class AppointmentController extends Controller {
     public function update(Request $request, Appointment $appointment) {
         $user = Auth::user();
 
+        if (count($request->all()) === 1 && $request->has('status')) {
+            // Only update the status
+            $appointment->update([
+                'status' => $request->input('status'),
+            ]);
+
+            $target_user = User::find($appointment->user_id);
+
+            $mail = new EmailController();
+            $mail->sendStatusChangeEmail($target_user, $appointment);
+
+            return response()->json($appointment);
+        }
+
         if ($user->id === $appointment->user_id || $user->role === 'admin') {
             request()->validate([
                 'description' => ['required', 'min:3'],
@@ -139,8 +153,6 @@ class AppointmentController extends Controller {
                 'user_id' => $user->role === 'admin' ? $appointment->user_id : $user->id,
                 'status' => request('status') ?? $appointment->status,
             ]);
-
-
 
             if ($user->role === 'admin' && $appointment->status !== $current_status) {
                 $target_user = User::find($appointment->user_id);
