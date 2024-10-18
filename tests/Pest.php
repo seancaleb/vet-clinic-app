@@ -50,8 +50,15 @@ function createUser($is_admin = false) {
     ]);
 }
 
-function createAppointment($user_id) {
+function createAppointment($user_id, $appointment_create_params = []) {
+    if (!$appointment_create_params) {
+        return Appointment::factory()->create([
+            'user_id' => $user_id
+        ]);
+    }
+
     return Appointment::factory()->create([
+        ...$appointment_create_params,
         'user_id' => $user_id
     ]);
 }
