@@ -53,41 +53,45 @@ export function filterDialog() {
     });
 
     btns.forEach((btn) => {
-        btn.addEventListener("click", function () {
-            overlay.setAttribute("data-state", "closed");
-            content.setAttribute("data-state", "closed");
-            overlay.addEventListener(
-                "animationend",
-                function () {
-                    overlay.classList.remove("block");
-                    overlay.classList.add("hidden");
-                },
-                {
-                    once: true,
-                }
-            );
-        });
-    });
-
-    btn.addEventListener("click", function () {
-        if (overlay.getAttribute("data-state") === "closed") {
-            overlay.classList.remove("hidden");
-            overlay.classList.add("block");
-            overlay.setAttribute("data-state", "open");
-            content.setAttribute("data-state", "open");
-        } else {
-            overlay.setAttribute("data-state", "closed");
-            content.setAttribute("data-state", "closed");
-            overlay.classList.remove("block");
-            overlay.addEventListener(
-                "animationend",
-                function () {
-                    overlay.classList.add("hidden");
-                },
-                {
-                    once: true,
-                }
-            );
+        if (btn) {
+            btn.addEventListener("click", function () {
+                overlay.setAttribute("data-state", "closed");
+                content.setAttribute("data-state", "closed");
+                overlay.addEventListener(
+                    "animationend",
+                    function () {
+                        overlay.classList.remove("block");
+                        overlay.classList.add("hidden");
+                    },
+                    {
+                        once: true,
+                    }
+                );
+            });
         }
     });
+
+    if (btn) {
+        btn.addEventListener("click", function () {
+            if (overlay.getAttribute("data-state") === "closed") {
+                overlay.classList.remove("hidden");
+                overlay.classList.add("block");
+                overlay.setAttribute("data-state", "open");
+                content.setAttribute("data-state", "open");
+            } else {
+                overlay.setAttribute("data-state", "closed");
+                content.setAttribute("data-state", "closed");
+                overlay.classList.remove("block");
+                overlay.addEventListener(
+                    "animationend",
+                    function () {
+                        overlay.classList.add("hidden");
+                    },
+                    {
+                        once: true,
+                    }
+                );
+            }
+        });
+    }
 }
