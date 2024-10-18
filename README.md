@@ -55,6 +55,20 @@ DB_USERNAME=
 DB_PASSWORD=
 ```
 
+-   Add **SEEDER_TYPE** in your **.env** and specify whether its _plain_ or _demo_
+
+> Note: 'demo' will seed many users and appointments whilst 'plain' will seed a single user only and no appointments
+
+```
+SEEDER_TYPE=<SEEDER_TYPE> // ex. demo
+```
+
+-   Run the following to purge the cache configuration
+
+```
+php artisan config:clear
+```
+
 -   Run migrations and seed data in the database
 
 ```
