@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            // Inject middleware for checking role of users
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         ]);
     })

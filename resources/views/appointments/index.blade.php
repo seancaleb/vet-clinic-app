@@ -29,6 +29,7 @@
                 </svg>
                 New Appointment</x-ui.link>
             @if ($user->role === 'admin')
+                {{-- Dialog form for filtering appointments --}}
                 @include('appointments.partials.filter-dialog-form')
             @endif
         </div>
@@ -37,6 +38,7 @@
     <section class="space-y-6 p-6 sm:p-0">
         <div class="grid gap-6 justify-items-start overflow-x-auto rounded-xl">
             @if ($appointments->count() > 0)
+                {{-- Display a table of appointments  --}}
                 <table>
                     <tr>
                         <th class='whitespace-nowrap'>Pet name</th>

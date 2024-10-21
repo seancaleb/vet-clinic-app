@@ -53,6 +53,7 @@ class UserController extends Controller {
     public function update(Request $request, User $user) {
         $current_user = Auth::user();
 
+        // Check if user role is 'admin', if yes, allow updating the information of users, else throw a 403 error
         if ($current_user->role !== 'admin') {
             abort(403, "You don't access rights to edit this resource.");
         }
