@@ -105,6 +105,12 @@ class AppointmentController extends Controller {
      * Display the specified resource.
      */
     public function show(Appointment $appointment) {
+        $user = Auth::user();
+
+        if ($appointment->user_id !== Auth::user()->id && $user->role !== 'admin') {
+            return redirect()->route('appointments.index');
+        }
+
         return view('appointments.show', ['appointment' => $appointment]);
     }
 
@@ -113,6 +119,11 @@ class AppointmentController extends Controller {
      */
     public function edit(Appointment $appointment) {
         $user = Auth::user();
+
+        if ($appointment->user_id !== Auth::user()->id && $user->role !== 'admin') {
+            return redirect()->route('appointments.index');
+        }
+
         return view('appointments.edit', ['appointment' => $appointment, 'user' => $user]);
     }
 
