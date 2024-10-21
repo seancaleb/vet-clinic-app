@@ -16,6 +16,7 @@ class AppointmentController extends Controller {
     public function index(Request $request) {
         $user = Auth::user();
 
+        // Check if role is 'admin', return all appointments of all users
         if ($user->role === 'admin') {
             $appointments = Appointment::with('user')
                 ->orderBy('updated_at', 'desc')
@@ -24,6 +25,7 @@ class AppointmentController extends Controller {
             return view('appointments.index', ['appointments' => $appointments, 'user' => $user]);
         }
 
+        // If role is 'patient', only return the patient's appointments
         $appointments = Appointment::with('user')
             ->where('user_id', $user->id)
             ->orderBy('updated_at', 'desc')
@@ -92,6 +94,7 @@ class AppointmentController extends Controller {
             'status' => 'pending'
         ]);
 
+        // Send mail to the patient after booking a new appointment
         $mail = new EmailController();
         $mail->sendBookingConfirmationEmail($user, $appointment);
 
@@ -119,20 +122,22 @@ class AppointmentController extends Controller {
     public function update(Request $request, Appointment $appointment) {
         $user = Auth::user();
 
+        // Responsible for cancelling appointments only
         if (count($request->all()) === 1 && $request->has('status')) {
-            // Only update the status
             $appointment->update([
                 'status' => $request->input('status'),
             ]);
 
             $target_user = User::find($appointment->user_id);
 
+            // Send mail to patient to notify that the appointment is 'cancelled'
             $mail = new EmailController();
             $mail->sendStatusChangeEmail($target_user, $appointment);
 
             return response()->json($appointment);
         }
 
+        // Responsible for updating an appointment based on the form
         if ($user->id === $appointment->user_id || $user->role === 'admin') {
             request()->validate([
                 'description' => ['required', 'min:3'],
@@ -154,9 +159,9 @@ class AppointmentController extends Controller {
                 'status' => request('status') ?? $appointment->status,
             ]);
 
+            // Only send mails when the status have changed to a different state
             if ($user->role === 'admin' && $appointment->status !== $current_status) {
                 $target_user = User::find($appointment->user_id);
-
 
                 $mail = new EmailController();
                 $mail->sendStatusChangeEmail($target_user, $appointment);
@@ -179,7 +184,6 @@ class AppointmentController extends Controller {
      */
     public function destroy(Appointment $appointment) {
         $user = Auth::user();
-
 
         if ($user->id != $appointment->user_id && $user->role !== 'admin') {
             abort(403, "You don't have permission to edit this resource.");

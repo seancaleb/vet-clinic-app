@@ -9,6 +9,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
+// Command for sending manual reminder mails to users for their appointments which will notify them if their schedule is less than 24 hours away
 Artisan::command('send:reminders', function () {
     $this->comment('Sending reminders...');
 

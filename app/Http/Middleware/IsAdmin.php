@@ -14,6 +14,7 @@ class IsAdmin {
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response {
+        // Middleware for checking the role of users to allow authorization
         if (Auth::user()->role === "admin") {
             return $next($request);
         } else {
