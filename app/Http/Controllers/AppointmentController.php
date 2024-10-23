@@ -79,8 +79,10 @@ class AppointmentController extends Controller {
         request()->validate([
             'description' => ['required', 'min:3'],
             'pet_name' => ['required'],
-            'appointment_date' => ['required'],
+            'appointment_date' => ['required', 'date', 'after_or_equal:tomorrow'],
             'appointment_type' => ['required']
+        ], [
+            'appointment_date.after_or_equal' => 'The appointment date must be tomorrow or a future date.'
         ]);
 
         $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
@@ -150,13 +152,18 @@ class AppointmentController extends Controller {
 
         // Responsible for updating an appointment based on the form
         if ($user->id === $appointment->user_id || $user->role === 'admin') {
-            request()->validate([
-                'description' => ['required', 'min:3'],
-                'pet_name' => ['required'],
-                'appointment_date' => ['required'],
-                'appointment_type' => ['required'],
-                // 'status' => ['required']
-            ]);
+            request()->validate(
+                [
+                    'description' => ['required', 'min:3'],
+                    'pet_name' => ['required'],
+                    'appointment_date' => ['required', 'date', 'after_or_equal:tomorrow'],
+                    'appointment_type' => ['required'],
+                    // 'status' => ['required']
+                ],
+                [
+                    'appointment_date.after_or_equal' => 'The appointment date must be tomorrow or a future date.'
+                ]
+            );
 
             $current_status = $appointment->status;
             $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
@@ -201,6 +208,7 @@ class AppointmentController extends Controller {
         }
 
         $appointment->delete();
+        $appointment->notifications()->delete();
 
         return redirect()->route('appointments.index');
     }
