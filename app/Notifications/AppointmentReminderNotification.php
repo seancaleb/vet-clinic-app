@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Notification as ModelsNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,7 +14,7 @@ class AppointmentReminderNotification extends Notification {
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected $appointment_reminder) {
+    public function __construct(protected $appointment_reminder, protected $user) {
         //
     }
 
@@ -30,8 +31,17 @@ class AppointmentReminderNotification extends Notification {
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage {
+        $subject = "Booking Appointment Reminder #{$this->appointment_reminder->id}";
+
+        ModelsNotification::create([
+            "user_id" => $this->user->id,
+            "appointment_id" => $this->appointment_reminder->id,
+            "email" => $this->user->email,
+            "subject" => $subject,
+        ]);
+
         return (new MailMessage)
-            ->subject("Booking Appointment Reminder #{$this->appointment_reminder->id}")
+            ->subject($subject)
             ->view('mail.appointment-reminder', [
                 'appointment' => $this->appointment_reminder
             ]);
