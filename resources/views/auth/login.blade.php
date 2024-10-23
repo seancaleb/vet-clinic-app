@@ -20,16 +20,26 @@
             <x-ui.input-label for="password" :value="__('Password')" />
             <x-ui.input-text id="password" name="password" type="password" required />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
+
+            <!-- Show Password -->
+            <div class="block mt-2">
+                <label for="show_password" class="inline-flex items-center">
+                    <input id="show_password" type="checkbox"
+                        class="rounded border-gray-300 text-gray-600 shadow-sm focus:ring-gray-500"
+                        name="show_password">
+                    <span class="ms-2 text-sm text-gray-600">{{ __('Show password') }}</span>
+                </label>
+            </div>
         </div>
 
-        <!-- Remember Me -->
+        {{-- <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox"
                     class="rounded border-gray-300 text-gray-600 shadow-sm focus:ring-gray-500" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
-        </div>
+        </div> --}}
 
         <div class="flex flex-col gap-6 items-stretch sm:flex-row sm:gap-0 sm:items-center justify-end mt-6">
             @if (Route::has('password.request'))

@@ -17,7 +17,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/showPassword.js'])
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
