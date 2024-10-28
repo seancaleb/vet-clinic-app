@@ -1,15 +1,3 @@
-@php
-    use Carbon\Carbon;
-
-    // Need to check if exists to avoid error in testing
-    if (!function_exists('format_date')) {
-        function format_date($date)
-        {
-            return Carbon::parse($date)->format('m/d/Y');
-        }
-    }
-@endphp
-
 <x-app-layout>
     <x-slot:header>
         @if ($user->role === 'admin')
@@ -28,10 +16,6 @@
                         d="M12 21q-.425 0-.712-.288T11 20v-7H4q-.425 0-.712-.288T3 12t.288-.712T4 11h7V4q0-.425.288-.712T12 3t.713.288T13 4v7h7q.425 0 .713.288T21 12t-.288.713T20 13h-7v7q0 .425-.288.713T12 21" />
                 </svg>
                 New Appointment</x-ui.link>
-            @if ($user->role === 'admin')
-                {{-- Dialog form for filtering appointments --}}
-                @include('appointments.partials.filter-dialog-form')
-            @endif
         </div>
     </x-slot:actions>
 
@@ -64,8 +48,6 @@
                 </section>
             @endif
         </div>
-
-        <div>{{ $appointments->onEachSide(0)->links() }}</div>
     </section>
 </x-app-layout>
 
