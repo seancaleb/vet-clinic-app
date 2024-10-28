@@ -98,8 +98,9 @@
                     <div>{{ ucfirst($appointment->appointment_type) }}</div>
                 </div>
                 <div class="col-span-1 space-y-1">
-                    <div class="text-sm text-gray-500">Date created</div>
-                    <div>{{ $formatted_date_created }}</div>
+                    <div class="text-sm text-gray-500">Payment status</div>
+                    <x-ui.badge-status data-badge-status="badge-status"
+                        :status="$appointment->payment_status">{{ strtoupper($appointment->payment_status) }}</x-ui.badge-status>
                 </div>
             </div>
 

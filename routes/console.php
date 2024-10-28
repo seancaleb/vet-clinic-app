@@ -28,7 +28,7 @@ Artisan::command('send:reminders', function () {
 
         // Send the notification to the user
         if ($user && $user->email && $is_appointment_confirmed) {
-            $user->notify(new AppointmentReminderNotification($appointment));
+            $user->notify(new AppointmentReminderNotification($appointment, $user));
         }
     }
 

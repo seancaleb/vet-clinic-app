@@ -31,6 +31,7 @@ git clone <REPO_URL> <YOUR_PROJECT_NAME>
 
 -   Go to project directory `cd <YOUR_PROJECT_NAME>`
 -   Run `npm install`
+-   Run `composer install`
 
 ### 2. Setting up the project
 
@@ -108,6 +109,7 @@ MAIL_FROM_NAME="<YOUR_MAIL_NAME>" // ex. VetHub
 
 -   Create a **.env.testing** file and copy the contents from **.env**
 -   Modify the following values in your **.env.testing** file to be able to connect to your mirror database for testing
+-   Make sure to enable **pdo_sqlite** extension in **php.ini**
 
 > Note: We'll be using sqlite as the default mirror database for testing
 
@@ -121,3 +123,17 @@ DB_DATABASE=:memory:
 ### 2. Run tests
 
 -   To run tests, run `php artisan test`
+
+## Dummy payment gateway
+
+-   To simulate a dummy payment process that will change the payment status of an appointment, you can use an API platform to test the following endpoint:
+
+```
+Method: POST
+URI: {$ROOT_URL}/api/payment
+Sample JSON Body:
+{
+    appointmentId: 1,
+    amount: 100
+}
+```

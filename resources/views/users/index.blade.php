@@ -1,67 +1,20 @@
-@php
-    use Carbon\Carbon;
-
-    // Need to check if exists to avoid error in testing
-    if (!function_exists('format_date')) {
-        function format_date($date)
-        {
-            return Carbon::parse($date)->format('m/d/Y');
-        }
-    }
-
-    if (!function_exists('get_total_appointments')) {
-        function get_total_appointments($count)
-        {
-            if ($count === 0) {
-                return 'N/A';
-            } elseif ($count === 1) {
-                return "{$count} appointment";
-            } else {
-                return "{$count} appointments";
-            }
-        }
-    }
-
-@endphp
-
 <x-app-layout>
     <x-slot:header>{{ __('All Users') }}</x-slot:header>
 
     <section class="space-y-6 p-6 sm:p-0">
-        <div class="space-y-6 overflow-x-auto rounded-xl">
+        <div class="grid gap-6 justify-items-start rounded-xl">
             @if ($users->count() > 1)
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th class="whitespace-nowrap">No. of appointments</th>
-                        <th class="whitespace-nowrap">Created at</th>
-                        <th>Status</th>
-                    </tr>
-                    @foreach ($users as $user)
-                        @if ($user->id === Auth::user()->id)
-                            @continue;
-                        @endif
-
-                        <tr onclick="window.location='{{ route('users.show', ['user' => $user]) }}'">
-                            <td class='text-gray-800 font-medium whitespace-nowrap'>{{ $user->name }}</td>
-                            <td class='whitespace-nowrap'>{{ $user->email }}</td>
-                            <td class='whitespace-nowrap'>{{ ucfirst($user->role) }}</td>
-                            <td class='whitespace-nowrap'>{{ get_total_appointments($user->appointments->count()) }}</td>
-                            <td class='whitespace-nowrap'>{{ format_date($user->created_at) }}
-                            </td>
-                            <td>
-                                @if (empty($user->email_verified_at))
-                                    <x-ui.badge-status
-                                        :status="'not-verified'">{{ strtoupper('Not Verified') }}</x-ui.badge-status>
-                                @else
-                                    <x-ui.badge-status
-                                        :status="'verified'">{{ strtoupper('Verified') }}</x-ui.badge-status>
-                                @endif
-                            </td>
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th class="whitespace-nowrap">No. of appointments</th>
+                            <th class="whitespace-nowrap">Created at</th>
+                            <th>Status</th>
                         </tr>
-                    @endforeach
+                    </thead>
                 </table>
             @else
                 <section class="py-32 w-full text-gray-500">
@@ -72,10 +25,63 @@
                         <p class="max-w-[50ch]">There are currently no active patients yet.</p>
                     </div>
                 </section>
-
             @endif
         </div>
-
-        <div>{{ $users->onEachSide(0)->links() }}</div>
     </section>
 </x-app-layout>
+
+<script type='text/javascript'>
+    $(document).ready(function() {
+        let columns = [{
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'email',
+                name: 'email'
+            },
+            {
+                data: 'role',
+                name: 'role'
+            },
+            {
+                data: 'number_of_appointments',
+                name: 'number_of_appointments'
+            },
+            {
+                data: 'created_at',
+                name: 'created_at'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            }
+        ];
+
+        $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('users.index') }}",
+            columnDefs: [{
+                orderable: false,
+                targets: [3, 5]
+            }],
+            columns,
+            "rowCallback": function(row, data, dataIndex) {
+                let userId = data.id;
+                let url = `/users/${userId}`;
+
+                $(row).attr('onclick', `location.href='${url}'`);
+                $(row).addClass('cursor-pointer');
+            },
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(0)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                $('td:eq(1)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                $('td:eq(2)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                $('td:eq(3)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                $('td:eq(4)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                $('td:eq(5)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+            },
+        })
+    })
+</script>

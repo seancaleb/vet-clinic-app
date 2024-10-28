@@ -1,15 +1,3 @@
-@php
-    use Carbon\Carbon;
-
-    // Need to check if exists to avoid error in testing
-    if (!function_exists('format_date')) {
-        function format_date($date)
-        {
-            return Carbon::parse($date)->format('m/d/Y');
-        }
-    }
-@endphp
-
 <x-app-layout>
     <x-slot:header>
         @if ($user->role === 'admin')
@@ -28,49 +16,27 @@
                         d="M12 21q-.425 0-.712-.288T11 20v-7H4q-.425 0-.712-.288T3 12t.288-.712T4 11h7V4q0-.425.288-.712T12 3t.713.288T13 4v7h7q.425 0 .713.288T21 12t-.288.713T20 13h-7v7q0 .425-.288.713T12 21" />
                 </svg>
                 New Appointment</x-ui.link>
-            @if ($user->role === 'admin')
-                {{-- Dialog form for filtering appointments --}}
-                @include('appointments.partials.filter-dialog-form')
-            @endif
         </div>
     </x-slot:actions>
 
     <section class="space-y-6 p-6 sm:p-0">
-        <div class="grid gap-6 justify-items-start overflow-x-auto rounded-xl">
+        <div class="grid gap-6 justify-items-start rounded-xl">
             @if ($appointments->count() > 0)
                 {{-- Display a table of appointments  --}}
-                <table>
-                    <tr>
-                        <th class='whitespace-nowrap'>Pet name</th>
-                        @if (Auth::user()->role === 'admin')
-                            <th class='whitespace-nowrap'>Pet owner</th>
-                        @endif
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Schedule</th>
-                        <th>Status</th>
-                    </tr>
-                    @foreach ($appointments as $appointment)
-                        <tr
-                            onclick="window.location='{{ route('appointments.show', ['appointment' => $appointment]) }}'">
-                            <td class='whitespace-nowrap text-gray-800 font-medium'>
-                                {{ $appointment->pet_name }}</td>
+                <table id="appointments-table">
+                    <thead>
+                        <tr>
+                            <th class='whitespace-nowrap'>Pet name</th>
                             @if (Auth::user()->role === 'admin')
-                                <td class='text-gray-800 font-medium whitespace-nowrap'>
-                                    {{ $appointment->user->name }}</td>
+                                <th class='whitespace-nowrap'>Pet owner</th>
                             @endif
-                            <td class="min-w-[440px] break-words">{{ Str::words($appointment->description, 15) }}</td>
-                            <td class='whitespace-nowrap'>
-                                {{ ucfirst($appointment->appointment_type) }}
-                            </td>
-                            <td class='whitespace-nowrap'>
-                                {{ format_date($appointment->appointment_date) }}</td>
-                            <td class='whitespace-nowrap'>
-                                <x-ui.badge-status
-                                    :status="$appointment->status">{{ strtoupper($appointment->status) }}</x-ui.badge-status>
-                            </td>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Schedule</th>
+                            <th>Status</th>
+                            <th class='whitespace-nowrap'>Payment status</th>
                         </tr>
-                    @endforeach
+                    </thead>
                 </table>
             @else
                 <section class="py-32 w-full text-gray-500">
@@ -83,7 +49,76 @@
                 </section>
             @endif
         </div>
-
-        <div>{{ $appointments->onEachSide(0)->links() }}</div>
     </section>
 </x-app-layout>
+
+<script type='text/javascript'>
+    const userRole = "{{ Auth::user()->role }}";
+
+    $(document).ready(function() {
+        let columns = [{
+                data: 'pet_name',
+                name: 'pet_name'
+            },
+            {
+                data: 'description',
+                name: 'description'
+            },
+            {
+                data: 'appointment_type',
+                name: 'appointment_type'
+            },
+            {
+                data: 'appointment_date',
+                name: 'appointment_date'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'payment_status',
+                name: 'payment_status'
+            }
+        ];
+
+        if (userRole === 'admin') {
+            columns.splice(1, 0, {
+                data: 'pet_owner',
+                name: 'user.name'
+            });
+        }
+
+        $('#appointments-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('appointments.index') }}",
+            columns,
+            "rowCallback": function(row, data, dataIndex) {
+                let appointmentId = data.id;
+                let url = `/appointments/${appointmentId}`;
+
+                $(row).attr('onclick', `location.href='${url}'`);
+                $(row).addClass('cursor-pointer');
+            },
+            createdRow: function(row, data, dataIndex) {
+                if (userRole === 'admin') {
+                    $('td:eq(0)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(1)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(2)', row).addClass('min-w-[328px] break-words w-full');
+                    $('td:eq(3)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(4)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(5)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(6)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                } else {
+                    $('td:eq(0)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(1)', row).addClass('min-w-[328px] break-words w-full');
+                    $('td:eq(2)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(3)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(4)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(5)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                }
+            },
+        })
+    })
+</script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\AppointmentsDataTable;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class AppointmentController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) {
+    public function index(AppointmentsDataTable $dataTable) {
         $user = Auth::user();
 
         // Check if role is 'admin', return all appointments of all users
@@ -21,17 +22,18 @@ class AppointmentController extends Controller {
             $appointments = Appointment::with('user')
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
-
-            return view('appointments.index', ['appointments' => $appointments, 'user' => $user]);
+        } else {
+            // If role is 'patient', only return the patient's appointments
+            $appointments = Appointment::with('user')
+                ->where('user_id', $user->id)
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
         }
 
-        // If role is 'patient', only return the patient's appointments
-        $appointments = Appointment::with('user')
-            ->where('user_id', $user->id)
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10);
-
-        return view('appointments.index', ['appointments' => $appointments, 'user' => $user]);
+        return $dataTable->render('appointments.index', [
+            'user' => $user,
+            'appointments' => $appointments,
+        ]);
     }
 
     /**
@@ -79,8 +81,10 @@ class AppointmentController extends Controller {
         request()->validate([
             'description' => ['required', 'min:3'],
             'pet_name' => ['required'],
-            'appointment_date' => ['required'],
+            'appointment_date' => ['required', 'date', 'after_or_equal:tomorrow'],
             'appointment_type' => ['required']
+        ], [
+            'appointment_date.after_or_equal' => 'The appointment date must be tomorrow or a future date.'
         ]);
 
         $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
@@ -150,13 +154,18 @@ class AppointmentController extends Controller {
 
         // Responsible for updating an appointment based on the form
         if ($user->id === $appointment->user_id || $user->role === 'admin') {
-            request()->validate([
-                'description' => ['required', 'min:3'],
-                'pet_name' => ['required'],
-                'appointment_date' => ['required'],
-                'appointment_type' => ['required'],
-                // 'status' => ['required']
-            ]);
+            request()->validate(
+                [
+                    'description' => ['required', 'min:3'],
+                    'pet_name' => ['required'],
+                    'appointment_date' => ['required', 'date', 'after_or_equal:tomorrow'],
+                    'appointment_type' => ['required'],
+                    // 'status' => ['required']
+                ],
+                [
+                    'appointment_date.after_or_equal' => 'The appointment date must be tomorrow or a future date.'
+                ]
+            );
 
             $current_status = $appointment->status;
             $appointment_date = Carbon::parse(request('appointment_date'))->format('Y-m-d');
@@ -201,6 +210,7 @@ class AppointmentController extends Controller {
         }
 
         $appointment->delete();
+        $appointment->notifications()->delete();
 
         return redirect()->route('appointments.index');
     }

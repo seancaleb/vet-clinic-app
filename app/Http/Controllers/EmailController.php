@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BookingConfirmationEmail;
 use App\Mail\StatusChangeEmail;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller {
@@ -17,6 +18,13 @@ class EmailController extends Controller {
         $to_email = $user->email;
         $mail_subject = "Booking Appointment Submitted #{$appointment->id}";
 
+        Notification::create([
+            "user_id" => $user->id,
+            "appointment_id" => $appointment->id,
+            "email" => $to_email,
+            "subject" => $mail_subject,
+        ]);
+
         Mail::to($to_email)->send(new BookingConfirmationEmail($user, $appointment, $mail_subject));
     }
 
@@ -28,7 +36,15 @@ class EmailController extends Controller {
      */
     public function sendStatusChangeEmail($user, $appointment) {
         $to_email = $user->email;
-        $mail_subject = "Booking Appointment #{$appointment->id} [Status Update]";
+        $status = ucfirst($appointment->status);
+        $mail_subject = "Booking Appointment #{$appointment->id} [{$status}]";
+
+        Notification::create([
+            "user_id" => $user->id,
+            "appointment_id" => $appointment->id,
+            "email" => $to_email,
+            "subject" => $mail_subject,
+        ]);
 
         Mail::to($to_email)->send(new StatusChangeEmail($user, $appointment, $mail_subject));
     }

@@ -48,18 +48,15 @@ test('store method will create a new appointment', function () {
         'user_id' => $this->user->id,
         'pet_name' => fake()->name(),
         'description' => fake()->sentence(36),
-        'appointment_date' => fake()->date(),
+        'appointment_date' => fake()->dateTimeBetween('tomorrow', '+1 year')->format('Y-m-d'),
         'appointment_type' => 'check-up',
         'status' => 'pending',
+        'payment_status' => 'unpaid'
     ];
 
-    $response = $this->post('/appointments', $appointment_data);
+    $this->post('/appointments', $appointment_data);
 
     $this->assertDatabaseHas('appointments', $appointment_data);
-
-    $last_appointment = Appointment::latest()->first();
-    $this->assertEquals($appointment_data['pet_name'], $last_appointment->pet_name);
-    $this->assertEquals($appointment_data['description'], $last_appointment->description);
 });
 
 test('edit method will show correct input values for users', function () {
