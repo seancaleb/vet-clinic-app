@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\AppointmentsDataTable;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class AppointmentController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) {
+    public function index(AppointmentsDataTable $dataTable) {
         $user = Auth::user();
 
         // Check if role is 'admin', return all appointments of all users
@@ -21,17 +22,18 @@ class AppointmentController extends Controller {
             $appointments = Appointment::with('user')
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
-
-            return view('appointments.index', ['appointments' => $appointments, 'user' => $user]);
+        } else {
+            // If role is 'patient', only return the patient's appointments
+            $appointments = Appointment::with('user')
+                ->where('user_id', $user->id)
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
         }
 
-        // If role is 'patient', only return the patient's appointments
-        $appointments = Appointment::with('user')
-            ->where('user_id', $user->id)
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10);
-
-        return view('appointments.index', ['appointments' => $appointments, 'user' => $user]);
+        return $dataTable->render('appointments.index', [
+            'user' => $user,
+            'appointments' => $appointments,
+        ]);
     }
 
     /**
