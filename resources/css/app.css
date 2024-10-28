@@ -33,7 +33,7 @@
 
 /* Datatable style modifications */
 .dataTables_wrapper {
-    @apply w-full grid grid-cols-2 gap-4 !important;
+    @apply w-full grid grid-cols-2 gap-4 overflow-x-auto !important;
 }
 
 .dataTable {
