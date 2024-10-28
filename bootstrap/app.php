@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             // Inject middleware for checking role of users
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
-        ]);
+        ])->validateCsrfTokens(['api/*']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -44,7 +44,10 @@ class AppointmentsDataTable extends DataTable {
             ->editColumn('status', function ($appointment) {
                 return view('components.ui.badge-status', ['status' => $appointment->status])->with('slot', strtoupper($appointment->status))->render();
             })
-            ->rawColumns(['status'])
+            ->editColumn('payment_status', function ($appointment) {
+                return view('components.ui.badge-status', ['status' => $appointment->payment_status])->with('slot', strtoupper($appointment->payment_status))->render();
+            })
+            ->rawColumns(['status', 'payment_status'])
             ->setRowId('id');
 
         if ($user->role === 'admin') {
@@ -100,6 +103,7 @@ class AppointmentsDataTable extends DataTable {
             Column::make('appointment_type'),
             Column::make('appointment_date'),
             Column::make('status'),
+            Column::make('payment_status'),
         ];
     }
 

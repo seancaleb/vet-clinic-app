@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->date('appointment_date');
             $table->enum('appointment_type', ['check-up', 'surgery', 'vaccination']);
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->enum('payment_status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
         });
     }

@@ -8,10 +8,12 @@
             break;
         case 'confirmed':
         case 'verified':
+        case 'paid':
             $class = 'text-xs font-semibold rounded-full px-[10px] py-0.5 bg-green-500/10 text-green-500 inline-block';
             break;
         case 'cancelled':
         case 'not-verified':
+        case 'unpaid':
             $class = 'text-xs font-semibold rounded-full px-[10px] py-0.5 bg-red-500/10 text-red-500 inline-block';
             break;
         default:

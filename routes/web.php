@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,12 @@ Route::view('/playground', 'test')->name('playground');
 // Appointments
 Route::resource('appointments', AppointmentController::class)->middleware(['auth', 'verified']);
 Route::resource('users', UserController::class)->middleware(['auth', 'verified', 'isAdmin']);
+
+// API
+Route::group(['prefix' => 'api'], function () {
+    // Payment gateway
+    Route::post('/payment', [PaymentController::class, 'processPayment']);
+})->middleware(['auth', 'verified']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

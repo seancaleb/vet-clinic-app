@@ -34,6 +34,7 @@
                             <th>Type</th>
                             <th>Schedule</th>
                             <th>Status</th>
+                            <th class='whitespace-nowrap'>Payment status</th>
                         </tr>
                     </thead>
                 </table>
@@ -74,6 +75,10 @@
             {
                 data: 'status',
                 name: 'status'
+            },
+            {
+                data: 'payment_status',
+                name: 'payment_status'
             }
         ];
 
@@ -104,12 +109,14 @@
                     $('td:eq(3)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                     $('td:eq(4)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                     $('td:eq(5)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(6)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                 } else {
                     $('td:eq(0)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                     $('td:eq(1)', row).addClass('min-w-[328px] break-words w-full');
                     $('td:eq(2)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                     $('td:eq(3)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                     $('td:eq(4)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
+                    $('td:eq(5)', row).addClass('max-w-[228px] min-w-[128px] whitespace-nowrap');
                 }
             },
         })
