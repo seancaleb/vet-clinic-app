@@ -35,7 +35,7 @@ test('store (POST) route creates an appointment and redirects user to index rout
         'user_id' => $this->user->id,
         'pet_name' => fake()->name(),
         'description' => fake()->sentence(36),
-        'appointment_date' => fake()->date(),
+        'appointment_date' => fake()->dateTimeBetween('tomorrow', '+1 year')->format('Y-m-d'),
         'appointment_type' => fake()->randomElement(['vaccination', 'surgery', 'check-up']),
         'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled']),
     ];
@@ -76,7 +76,7 @@ test('update (PATCH) route updates an appointment and redirects user to the show
     $updated_appointment_data = [
         'pet_name' => fake()->name(),
         'description' => fake()->sentence(36),
-        'appointment_date' => fake()->date(),
+        'appointment_date' => fake()->dateTimeBetween('tomorrow', '+1 year')->format('Y-m-d'),
         'appointment_type' => fake()->randomElement(['vaccination', 'surgery', 'check-up']),
         'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled']),
     ];

@@ -25,6 +25,7 @@ class AppointmentFactory extends Factory {
             'appointment_date' => fake()->dateTimeBetween('today', '+3 months'),
             'appointment_type' => fake()->randomElement(['vaccination', 'surgery', 'check-up']),
             'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled']),
+            'payment_status' => 'unpaid',
         ];
     }
 }
