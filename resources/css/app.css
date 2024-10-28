@@ -4,24 +4,24 @@
 
 @layer base {
     table {
-        @apply text-sm w-full bg-white;
+        @apply text-sm w-full bg-white border-none rounded-xl overflow-clip !important;
     }
 
     th {
-        @apply text-left px-6 py-3 bg-gray-50 text-gray-800 font-medium;
+        @apply text-left px-6 py-3 bg-gray-50 text-gray-800 font-medium border-none !important;
     }
 
     td {
-        @apply px-6 py-7 text-left text-gray-500 max-w-[228px] min-w-[128px];
+        @apply px-6 py-7 text-left text-gray-500 !important;
     }
 
     tr {
-        @apply cursor-pointer hover:bg-gray-50 transition duration-300 border-b border-gray-100;
+        @apply cursor-pointer hover:bg-gray-50 transition duration-300 border-b border-gray-100 !important;
     }
 
     tr:first-of-type,
     tr:last-of-type {
-        @apply border-none;
+        @apply border-none !important;
     }
 }
 
@@ -29,4 +29,49 @@
     .section {
         @apply px-6 py-8 sm:p-8 bg-white sm:shadow sm:rounded-xl;
     }
+}
+
+/* Datatable style modifications */
+.dataTables_wrapper {
+    @apply w-full grid grid-cols-2 gap-4 !important;
+}
+
+.dataTable {
+    @apply col-span-2 w-full !important;
+}
+
+.dataTables_length {
+    @apply float-none col-span-2 sm:col-span-1 flex items-center text-gray-500 text-sm !important;
+}
+
+.dataTables_length select {
+    @apply max-w-16 rounded-lg px-2 text-sm w-full shrink-0 !important;
+}
+
+.dataTables_length label {
+    @apply flex items-center gap-3  !important;
+}
+
+.dataTables_filter {
+    @apply float-none col-span-2 sm:col-span-1 mt-0 text-gray-500 text-sm !important;
+}
+
+.dataTables_filter label {
+    @apply flex items-center sm:justify-end !important;
+}
+
+.dataTables_filter input {
+    @apply ml-3 bg-gray-50 border border-gray-300 text-gray-800 text-base rounded-lg inline focus:ring-gray-500 focus:border-gray-500 block px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 w-full sm:w-fit !important;
+}
+
+.dataTables_info {
+    @apply col-span-2 sm:col-span-1 text-gray-500 text-sm p-0 flex items-center !important;
+}
+
+.dataTables_paginate {
+    @apply col-span-2 sm:col-span-1 text-gray-500 text-sm m-0 p-0 flex items-center justify-between sm:justify-end !important;
+}
+
+.current {
+    @apply text-white bg-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2.5 h-10 focus:outline-none transition duration-300 !important;
 }
