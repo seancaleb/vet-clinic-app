@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,13 +11,16 @@ class UserController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(UsersDataTable $dataTable) {
 
         $users = User::with('appointments')
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
-        return view('users.index', ['users' => $users]);
+
+        return $dataTable->render('users.index', [
+            'users' => $users,
+        ]);
     }
 
     /**
