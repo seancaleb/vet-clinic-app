@@ -123,17 +123,3 @@ DB_DATABASE=:memory:
 ### 2. Run tests
 
 -   To run tests, run `php artisan test`
-
-## Dummy payment gateway
-
--   To simulate a dummy payment process that will change the payment status of an appointment, you can use an API platform to test the following endpoint:
-
-```
-Method: POST
-URI: {$ROOT_URL}/api/payment
-Sample JSON Body:
-{
-    appointmentId: 1,
-    amount: 100
-}
-```
