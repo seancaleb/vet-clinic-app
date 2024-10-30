@@ -49,6 +49,7 @@ class ProfileController extends Controller {
         $user->delete();
         $user->notifications()->delete();
         $user->appointments()->delete();
+        $user->payments()->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

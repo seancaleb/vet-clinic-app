@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\DataTables\AppointmentsDataTable;
 use App\Models\Appointment;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\EmailController;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class AppointmentController extends Controller {
     /**
@@ -211,7 +213,52 @@ class AppointmentController extends Controller {
 
         $appointment->delete();
         $appointment->notifications()->delete();
+        $appointment->payment()->delete();
 
         return redirect()->route('appointments.index');
+    }
+
+     /**
+     * Show the form for payment processing.
+     */
+    public function payment(Appointment $appointment) {
+        $user = $appointment->user;
+
+        return view('appointments.payment', ['appointment' => $appointment, 'user' => $user]);
+    }
+
+    public function processPayment(Request $request, Appointment $appointment) {
+        request()->validate([
+            'phone_number' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric']
+        ]);
+
+        $payment = Payment::create([
+            'user_id' => $appointment->user->id,
+            'appointment_id' => $appointment->id,
+            'amount' => request('amount'),
+            'phone_number' => request('phone_number'),
+        ]);
+
+        $appointment->payment_status = 'paid';
+        $appointment->save();
+
+        // Send email notification that the appointment has been paid.
+        $mail = new EmailController();
+        $mail->sendPaymentConfirmation($appointment->user, $appointment);
+
+        return redirect()->route('appointments.payment-success', ['appointment' => $appointment->id]);
+    }
+
+    public function processPaymentView( $appointment) {
+        $target_appointment = Appointment::with('payment')->findOrFail($appointment);
+
+        if($target_appointment->payment_status === 'paid') {
+            return view('appointments.payment-success', ['appointment' => $target_appointment]);
+        }
+
+        else {
+            return redirect()->route('appointments.show', ['appointment' => $appointment]);
+        }
     }
 }
