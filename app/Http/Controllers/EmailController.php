@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BookingConfirmationEmail;
+use App\Mail\PaymentConfirmationEmail;
 use App\Mail\StatusChangeEmail;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Mail;
@@ -47,5 +48,26 @@ class EmailController extends Controller {
         ]);
 
         Mail::to($to_email)->send(new StatusChangeEmail($user, $appointment, $mail_subject));
+    }
+
+    /**
+     * Function that sends a payment confirmation email to a patient after making a payment.
+     * @param mixed $user
+     * @param mixed $appointment
+     * @return void
+     */
+    public function sendPaymentConfirmation($user, $appointment) {
+        $to_email = $user->email;
+        $status = ucfirst($appointment->status);
+        $mail_subject = "Payment Successful for Booking Appointment #{$appointment->id}";
+
+        Notification::create([
+            "user_id" => $user->id,
+            "appointment_id" => $appointment->id,
+            "email" => $to_email,
+            "subject" => $mail_subject,
+        ]);
+
+        Mail::to($to_email)->send(new PaymentConfirmationEmail($user, $appointment, $mail_subject));
     }
 }

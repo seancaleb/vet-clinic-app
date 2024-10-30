@@ -16,4 +16,8 @@ class Appointment extends Model {
     public function notifications() {
         return $this->hasMany(Notification::class);
     }
+
+    public function payment() {
+        return $this->hasOne(Payment::class);
+    }
 }

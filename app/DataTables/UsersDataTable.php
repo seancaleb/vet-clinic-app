@@ -33,7 +33,7 @@ class UsersDataTable extends DataTable {
             }
         }
 
-        $query = User::with('appointments')->where('id', '!=', Auth::id());
+        $query = User::with('appointments')->where('id', '!=', Auth::id())->orderBy('updated_at', 'desc');
 
         $datatable =  (new EloquentDataTable($query))
             ->addColumn('action', 'users.action')

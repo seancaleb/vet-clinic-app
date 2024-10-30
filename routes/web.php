@@ -21,15 +21,19 @@ Route::get('/dashboard', function () {
 
 Route::view('/playground', 'test')->name('playground');
 
+// Added Resources
+Route::middleware(['auth', 'verified'])->group(function() {
+    // Appointments (Custom controllers)
+    Route::get('appointments/{appointment}/payment', [AppointmentController::class, 'payment'])->name('appointments.payment');
+    Route::post('appointments/{appointment}/processPayment', [AppointmentController::class, 'processPayment'])->name('appointments.processPayment');
+    Route::get('appointments/{appointment}/payment-success', [AppointmentController::class, 'processPaymentView'])->name('appointments.payment-success');
+});
+
 // Appointments
 Route::resource('appointments', AppointmentController::class)->middleware(['auth', 'verified']);
 Route::resource('users', UserController::class)->middleware(['auth', 'verified', 'isAdmin']);
 
-// API
-Route::group(['prefix' => 'api'], function () {
-    // Payment gateway
-    Route::post('/payment', [PaymentController::class, 'processPayment']);
-})->middleware(['auth', 'verified']);
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

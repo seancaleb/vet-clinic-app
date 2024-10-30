@@ -25,9 +25,9 @@ class AppointmentsDataTable extends DataTable {
 
         // Adjust the query based on user role
         if ($user->role === 'admin') {
-            $query = Appointment::with('user');
+            $query = Appointment::with('user')->orderBy('updated_at', 'desc');
         } else {
-            $query = Appointment::with('user')->where('user_id', $user->id);
+            $query = Appointment::with('user')->where('user_id', $user->id)->orderBy('created_at', 'desc');
         }
 
         $datatable = (new EloquentDataTable($query))
