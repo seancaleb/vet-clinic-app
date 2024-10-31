@@ -27,16 +27,27 @@
 <body class="font-sans antialiased">
     <div class="relative bg-white h-screen">
         <main>
-            <section class="py-32 w-full text-gray-500">
-                <div class="grid gap-4 text-center w-full justify-items-center">
-                    <h2 class="font-bold text-6xl text-gray-800 leading-none tracking-[-0.025em]">
-                        Page not found
+            <section class='py-32 px-6 mx-auto max-w-lg relative'>
+                <div class="grid gap-4 text-center bg-white p-6 justify-items-center">
+                    <div class="p-1 bg-red-500/20 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-1w-14 text-red-500" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12 17q.425 0 .713-.288T13 16t-.288-.712T12 15t-.712.288T11 16t.288.713T12 17m0-4q.425 0 .713-.288T13 12V8q0-.425-.288-.712T12 7t-.712.288T11 8v4q0 .425.288.713T12 13m0 9q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22" />
+                        </svg>
+                    </div>
+
+                    <h2 class="font-semibold text-xl text-gray-800 leading-none tracking-[-0.015em]">
+                        Page Not Found
                     </h2>
 
-                    <p class="text-lg max-w-[36ch]">{{ $error_message }}</p>
+                    <span class="text-gray-500 max-w-[50ch]">{{ $error_message }}</span>
+
 
                     <x-ui.link href="{{ route('landing-page') }}" class="flex items-center gap-2">
-                        Back to home</x-ui.link>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="m10.8 12l3.9 3.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.212-.325T8.425 12t.063-.375t.212-.325l4.6-4.6q.275-.275.7-.275t.7.275t.275.7t-.275.7z" />
+                        </svg>Back to home</x-ui.link>
                 </div>
             </section>
         </main>
