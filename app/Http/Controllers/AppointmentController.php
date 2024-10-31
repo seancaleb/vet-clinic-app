@@ -100,6 +100,8 @@ class AppointmentController extends Controller {
             'status' => 'pending'
         ]);
 
+        $appointment->refresh();
+
         // Send mail to the patient after booking a new appointment
         $mail = new EmailController();
         $mail->sendBookingConfirmationEmail($user, $appointment);
