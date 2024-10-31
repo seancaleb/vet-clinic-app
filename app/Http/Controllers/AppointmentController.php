@@ -218,7 +218,7 @@ class AppointmentController extends Controller {
         return redirect()->route('appointments.index');
     }
 
-     /**
+    /**
      * Show the form for payment processing.
      */
     public function payment(Appointment $appointment) {
@@ -250,14 +250,13 @@ class AppointmentController extends Controller {
         return redirect()->route('appointments.payment-success', ['appointment' => $appointment->id]);
     }
 
-    public function processPaymentView( $appointment) {
+    public function processPaymentView($appointment) {
         $target_appointment = Appointment::with('payment')->findOrFail($appointment);
+        $user = Auth::user();
 
-        if($target_appointment->payment_status === 'paid') {
+        if ($target_appointment->payment_status === 'paid' && $user->id === $target_appointment->user_id) {
             return view('appointments.payment-success', ['appointment' => $target_appointment]);
-        }
-
-        else {
+        } else {
             return redirect()->route('appointments.show', ['appointment' => $appointment]);
         }
     }
