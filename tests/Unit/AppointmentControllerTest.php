@@ -96,8 +96,6 @@ test('update method will trigger validation errors and redirect back to the form
 
     $appointment = createAppointment($this->user->id);
 
-    $formatted_date = Carbon::parse($appointment->appointment_date)->format('m/d/Y');
-
     $response = $this->patch("/appointments/{$appointment->id}", [
         'description' => '',
         'pet_name' => '',
@@ -141,4 +139,33 @@ test('delete method will delete an appointment and successfully redirects back t
         ->assertStatus(302);
 
     $this->assertDatabaseMissing('appointments', ['id' => $appointment->id]);
+});
+
+test('processPayment method will process the payment for an appointment', function () {
+    $this->actingAs($this->user);
+
+    $appointment = createAppointment($this->user->id);
+
+    $payment_detail_values = [
+        'user_id' => $this->user->id,
+        'appointment_id' => $appointment->id,
+        'amount' => 500,
+        'phone_number' => '09695699966'
+    ];
+
+    $response = $this->post("/appointments/{$appointment->id}/processPayment", $payment_detail_values);
+    $response->assertRedirect("/appointments/{$appointment->id}/payment-success")
+        ->assertStatus(302);
+
+    $response = $this->get("/appointments/{$appointment->id}/payment-success");
+
+    $response->assertViewIs("appointments.payment-success")
+        ->assertViewHas('appointment', function ($viewAppointment) use ($appointment) {
+            return $viewAppointment->id === $appointment->id && $viewAppointment->payment_status === 'paid';
+        });
+
+    $this->assertDatabaseHas("appointments", [
+        'id' => $appointment->id,
+        'payment_status' => 'paid'
+    ]);
 });

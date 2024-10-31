@@ -23,17 +23,21 @@
                 <div class="flex items-center gap-2">
                     @if ($appointment->payment_status !== 'paid')
                         <x-ui.link href="{{ route('appointments.payment', ['appointment' => $appointment]) }}"
-                            class="flex items-center gap-2 w-full sm:w-fit">
-                            Pay Now
+                            class="flex items-center gap-2 w-full sm:w-fit"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5 text-white" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M3 20q-.825 0-1.412-.587T1 18V8q0-.425.288-.712T2 7t.713.288T3 8v10h16q.425 0 .713.288T20 19t-.288.713T19 20zm4-4q-.825 0-1.412-.587T5 14V6q0-.825.588-1.412T7 4h14q.825 0 1.413.588T23 6v8q0 .825-.587 1.413T21 16zm2-2q0-.825-.587-1.412T7 12v2zm10 0h2v-2q-.825 0-1.412.588T19 14m-5-1q1.25 0 2.125-.875T17 10t-.875-2.125T14 7t-2.125.875T11 10t.875 2.125T14 13M7 8q.825 0 1.413-.587T9 6H7zm14 0V6h-2q0 .825.588 1.413T21 8" />
+                            </svg>
+                            Pay
                         </x-ui.link>
                         <x-ui.primary-button id="cancel-appointment-button" data-appointment-id="{{ $appointment->id }}"
-                        class="bg-red-700 hover:bg-red-800 focus:ring-red-300 border border-red-800/20 flex items-center gap-2 whitespace-nowrap justify-center">Cancel
-                        Appointment
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M16.15 13H5q-.425 0-.712-.288T4 12t.288-.712T5 11h11.15L13.3 8.15q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L19.3 11.3q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.575 4.575q-.3.3-.712.288t-.713-.313q-.275-.3-.288-.7t.288-.7z" />
-                        </svg>
-                    </x-ui.primary-button>
+                            class="bg-red-700 hover:bg-red-800 focus:ring-red-300 border border-red-800/20 flex items-center gap-2 whitespace-nowrap justify-center">Cancel
+                            Appointment
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M16.15 13H5q-.425 0-.712-.288T4 12t.288-.712T5 11h11.15L13.3 8.15q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L19.3 11.3q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.575 4.575q-.3.3-.712.288t-.713-.313q-.275-.3-.288-.7t.288-.7z" />
+                            </svg>
+                        </x-ui.primary-button>
                     @endif
                 </div>
             @endif

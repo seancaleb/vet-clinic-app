@@ -9,6 +9,7 @@
  *  5. /appointments/{id}/edit      GET                 'edit'
  *  6. /appointments/{id}           PATCH               'update'
  *  7. /appointments/{id}           DELETE              'destroy
+ *  8. /appointments/{id}/payment   GET                 'payment
  */
 
 beforeEach(function () {
@@ -92,4 +93,15 @@ test('destroy (DELETE) route deletes an appointment and redirects user to the in
     $response = $this->delete("/appointments/{$appointment->id}");
     $response->assertRedirect('/appointments')
         ->assertStatus(302);
+});
+
+test('payment (GET) route returns a view with a payment processing form', function () {
+    $appointment = createAppointment($this->user->id);
+
+    $response = $this->get("/appointments/{$appointment->id}/payment");
+    $response->assertOk()
+        ->assertViewIs("appointments.payment")
+        ->assertViewHas('appointment', function ($appointment) {
+            return $appointment->user_id === $this->user->id;
+        });
 });

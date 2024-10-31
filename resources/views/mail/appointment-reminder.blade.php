@@ -6,6 +6,7 @@
 
     // Format to replace dashes with space then capitalize first letter
     $appointment_type = str_replace('-', ' ', $appointment->appointment_type);
+    $payment_status = Str::ucfirst($appointment->payment_status);
     $appointment_type = Str::ucfirst($appointment_type);
 
     // Format to capitalize the first letter
@@ -31,6 +32,7 @@
         <li>Date: <b>{{ $formatted_date }}</b></li>
         <li>Type: <b>{{ $appointment_type }}</b></li>
         <li>Status: <b>{{ $appointment_status }}</b></li>
+        <li>Payment Status: <b>{{ $payment_status }}</b></li>
         <li>Description: {{ $appointment->description }}</li>
     </ul>
 
