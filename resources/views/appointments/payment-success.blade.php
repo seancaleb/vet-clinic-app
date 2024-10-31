@@ -23,7 +23,7 @@
                 Payment Successful
             </h2>
 
-            <span class="text-2xl text-gray-800 font-semibold">${{ number_format($appointment->payment->amount) }}</span>
+            <span class="text-2xl text-gray-800 font-semibold">₱{{ number_format($appointment->payment->amount) }}</span>
 
             <div class="grid gap-1 mb-2">
                 <span class="text-gray-800 font-medium">You have successfully paid your appointment.</span>
